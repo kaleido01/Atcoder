@@ -24,3 +24,17 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+n, k = mapInt()
+a = listInt()
+
+
+c = Counter(a)
+
+ans = 0
+print(c)
+kerval = k
+for i in range(n+1):
+  kerval = min(kerval, c[i])
+  ans += kerval
+
+print(ans)

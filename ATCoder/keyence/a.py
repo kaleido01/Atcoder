@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
-import sys, getpass
-import math, random
-import functools, itertools, collections, heapq, bisect
-from collections import Counter, defaultdict, deque
+import sys
+
 sys.setrecursionlimit(10**9)
 INF=10**18
-MOD=10**9+7 # 998244353
-# d4 = [(1,0),(0,1),(-1,0),(0,-1)]
-# d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
-# d6 = [(2,0),(1,1),(-1,1),(-2,0),(-1,-1),(1,-1)]  # hexagonal layout
+MOD=10**9+7
 input=lambda: sys.stdin.readline().rstrip()
 mapInt = lambda: map(int, input().split())
 listInt = lambda: list(map(int, input().split()))
@@ -22,5 +17,22 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
+from operator import itemgetter
+from collections import deque
+import heapq
 
 
+a = listInt()
+
+canMake = True
+if 1 not in a:
+  canMake = False
+if 9 not in a:
+  canMake = False
+if 7 not in a:
+  canMake = False
+if 4 not in a:
+  canMake = False
+  
+YESNO(canMake)
+  

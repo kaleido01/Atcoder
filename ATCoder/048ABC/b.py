@@ -24,3 +24,10 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+
+a, b, x = mapInt()
+
+if a == 0:
+  print(b // x + 1)
+else:
+  print(b // x - (a-1) // x)

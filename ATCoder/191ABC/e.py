@@ -23,4 +23,45 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
+n, m = mapInt()
 
+
+nodes = [[] for _ in range(n)]
+weight = [[0 for _ in range (n)] for _ in range(n)]
+
+for i in range(m):
+  a, b, c = mapInt()
+  a -= 1
+  b -=1
+  weight[a][b] = c
+  nodes[a].append(b)
+
+
+def dijikstra(start, nodes,weight):
+  minHeap = []
+  heapq.heappush(minHeap,(0, i))
+  while(minHeap):
+    # 先頭のキューを取り出す。取り出したキューは確定地点である。
+    cost , currentNode = heapq.heappop(minHeap)
+    # done[currentNode] = True
+    if cost > ans[currentNode]:
+      continue
+    
+    for node in nodes[currentNode]:
+      w = weight[currentNode][node]
+      if ans[node] > w + cost:
+        ans[node] = w + ans[currentNode]
+        heapq.heappush(minHeap, (ans[node], node))
+    
+
+
+for i in range(n):
+    done = [ False for _ in range(n)]
+    ans = [math.inf for _ in range(n)]
+    dijikstra(i,nodes,weight)
+    ans[i] = 0
+    print(ans)
+    if ans[i] == math.inf:
+      print(-1)
+    else:
+      print(ans[i])

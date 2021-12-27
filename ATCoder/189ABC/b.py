@@ -24,3 +24,14 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+n, x = mapInt()
+x *= 100
+ans = 0
+for i in range(n):
+  v, p = mapInt()
+  ans += v * p
+  if ans > x:
+    print(i+1)
+    sys.exit()
+
+print(-1)

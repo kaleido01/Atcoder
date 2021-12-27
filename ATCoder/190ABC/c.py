@@ -23,4 +23,41 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
+n,m = mapInt()
 
+a = [0] * m
+b = [0] * m
+
+for i in range(m):
+  p, q = mapInt()
+  a[i] = p -1
+  b[i] = q -1
+
+
+k = int(input())
+
+c = [0] * k
+d = [0] * k
+
+
+for i in range(k):
+  p, q = mapInt()
+  c[i] = p - 1
+  d[i] = q - 1
+  
+ans = 0
+for i in range(1 << k):
+  res = 0
+  put = []
+  for j in range(k):
+    if (i >> j) & 1:
+      put.append(c[j])
+    else:
+      put.append(d[j])
+  for x in range(m):
+    if a[x] in put and b[x] in put:
+      res +=1
+  
+  ans = max(ans, res)
+
+print(ans)

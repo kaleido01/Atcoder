@@ -23,4 +23,16 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
+n, s, d = mapInt()
 
+ans = False
+for i in range(n):
+  x, y = mapInt()
+  
+  if x < s and y > d:
+    ans = True
+
+if ans:
+  print("Yes")
+else:
+  print("No")

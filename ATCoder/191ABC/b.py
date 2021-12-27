@@ -24,3 +24,13 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+n, x = mapInt()
+
+a = listInt()
+
+b = []
+
+for i in range(n):
+  if a[i] != x:
+    print(a[i], end = " ")
+  

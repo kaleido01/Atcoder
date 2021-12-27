@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
-import sys, getpass
-import math, random
-import functools, itertools, collections, heapq, bisect
-from collections import Counter, defaultdict, deque
+import sys
+
 sys.setrecursionlimit(10**9)
 INF=10**18
-MOD=10**9+7 # 998244353
-# d4 = [(1,0),(0,1),(-1,0),(0,-1)]
-# d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
-# d6 = [(2,0),(1,1),(-1,1),(-2,0),(-1,-1),(1,-1)]  # hexagonal layout
+MOD=10**9+7
 input=lambda: sys.stdin.readline().rstrip()
 mapInt = lambda: map(int, input().split())
 listInt = lambda: list(map(int, input().split()))
@@ -22,5 +17,43 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
+from operator import itemgetter
+from collections import deque
+import heapq
 
 
+s = input()
+
+n = len(s)
+x = "keyence"
+# canMake = False
+# for i in range(7):
+#   fx = x[:i]
+#   ex = x[i:]
+#   # print(fx, ex)
+  
+#   r = 0
+#   q = 0
+#   r = s.find(fx, 0)
+#   q = s.rfind(ex, 0)
+  
+#   # print(r, q, i)
+#   if i == 0 and q == len(s) - 7:
+#     canMake = True
+#   elif i == 6 and r == 0:
+#     canMake = True
+#   elif 1 <= i <= 5 and r == 0 and q == len(s) - i -1:
+#     canMake = True
+    
+    
+for i in range(n):
+  for j in range(n):
+    news = s[:i] + s[j:] 
+    if x == news:
+      print("YES")
+      sys.exit()
+print("NO")
+
+
+
+# YESNO(canMake)

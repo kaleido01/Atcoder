@@ -24,3 +24,22 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+a, b, c = mapInt()
+
+start = 0
+if c == 1:
+  start = 1
+
+for i in range(300):
+  if start % 2 == 0:
+    if a == 0:
+      print("Aoki")
+      sys.exit()
+    a -= 1
+  else:
+    if b == 0:
+      print("Takahashi")
+      sys.exit()
+    
+    b -= 1
+  start += 1

@@ -24,3 +24,21 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+
+n, m = mapInt()
+
+a = [ [i, i-1, i+1] for i in range(n+1)]
+
+a[-1][1] = -1
+
+s = 1
+e = n
+
+for i in range(m):
+  x = int(input())
+  v, ss, ee = a[x]
+  a[x][2] = s
+  a[x][1] = -1
+  
+
+  

@@ -24,3 +24,17 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+n = int(input())
+
+a = listInt()
+
+ans = 0
+
+for i in range(n):
+  mina = a[i]
+  for j in range(i, n):
+    mina = min(mina, a[j])
+    ans = max(ans, (j-i+1) * mina)
+
+
+print(ans)

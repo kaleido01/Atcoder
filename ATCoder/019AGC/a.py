@@ -24,3 +24,17 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+
+q, h ,s, d = mapInt()
+n= int(input())
+
+l1 = min(4 * q, 2 * q + h, 2* h, s)
+l2 = min(2* l1, d)
+
+ans = 0
+if n%2 == 0:
+  ans = l2 * (n// 2)
+else:
+  ans = l2 * (n// 2) + l1
+  
+print(ans)

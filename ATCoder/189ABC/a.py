@@ -24,3 +24,10 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
+s = input()
+
+if s[0] == s[1] == s[2]:
+  print("Won")
+else:
+  print("Lost")
+

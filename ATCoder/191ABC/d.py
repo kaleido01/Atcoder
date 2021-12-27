@@ -23,4 +23,21 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
+x, y, r = map(float, input().split())
 
+ans = 0
+for i in range(math.floor(y - r), math.floor(y + r) +1):
+  if r ** 2 - (i - y) ** 2 >= 0:
+    # print(i)
+    left = x + math.sqrt(r ** 2 - (i - y) ** 2)
+    right = x - math.sqrt(r ** 2 - (i - y) ** 2)
+    # print(left, right)
+
+    left = math.floor(left)
+    right = math.ceil(right)
+    # print(left, right)
+    ans += left - right + 1
+    # print("ans", ans)
+  
+print(ans)
+  

@@ -23,4 +23,20 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
+n = int(input())
 
+ans = 0
+
+for i in range(1, math.floor((2*n) ** 0.5)+1):
+  if 2*n % i == 0:
+    x = i
+    y = 2* n // i
+    
+    a = (x - y + 1) % 2
+    b = (x + y - 1) % 2
+    if a == b == 0:
+      ans += 2
+    
+
+print(ans)
+  
