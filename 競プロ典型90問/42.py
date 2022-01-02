@@ -24,8 +24,20 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n = intInput()
+k = intInput()
 
-n, m = mapInt
+if k % 9 != 0:
+  print(0)
+  sys.exit()
 
-a = listInt()
+dp = init0(k+1)
+dp[0] = 1
+for i in range(1,k+1):
+  m = min(9, i)
+
+  for j in range(m+1):
+    dp[i] += dp[i-j]
+    dp[i] %= MOD
+
+# print(dp)
+print(dp[k])

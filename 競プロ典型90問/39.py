@@ -26,6 +26,33 @@ int1=lambda x:int(x)-1
 
 n = intInput()
 
-n, m = mapInt
+# n, m = mapInt()
 
-a = listInt()
+node = initDp(n)
+for i in range(n-1):
+  a, b = mapInt()
+  a, b = a-1, b-1
+  node[a].append(b)
+  node[b].append(a)
+  
+
+dp = [0] * n
+def dfs(pos, pre):
+  #自分自身の点を共有するので最低１つは存在
+  dp[pos] = 1
+  
+  for nv in node[pos]:
+    if nv != pre:
+      #自分より下の部分木についてdpを計算してから足し合わせる。ただし、逆流しないように直前と同じ場所の場合はスキップ
+      dfs(nv, pos)
+      dp[pos] += dp[nv]
+
+dfs(0, -1)
+
+# print(dp)
+
+ans = 0
+for v in dp:
+  ans += v * (n-v)
+  
+print(ans)

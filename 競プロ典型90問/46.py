@@ -26,6 +26,28 @@ int1=lambda x:int(x)-1
 
 n = intInput()
 
-n, m = mapInt
-
 a = listInt()
+b = listInt()
+c = listInt()
+
+x = init0(50)
+y = init0(50)
+z = init0(50)
+for i in range(n):
+  x[a[i] % 46] += 1
+  y[b[i] % 46] += 1
+  z[c[i] % 46] += 1
+# print(x, y, z)
+ans = 0
+for i in range(46):
+  for j in range(46):
+    rest = 0
+    if (i + j)%46 ==0:
+      rest = 0
+    else:
+      rest = 46 - (i + j)%46
+    # print(rest)
+    # print(x[i], y[j], rest)
+    ans += x[i] * y[j] * z[rest]
+print(ans)
+      

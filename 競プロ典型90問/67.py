@@ -24,8 +24,48 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n = intInput()
+n,k  = mapInt()
 
-n, m = mapInt
+if n == 0:
+  print(0)
+  sys.exit()
 
-a = listInt()
+def base_10(num_n,n):
+    num_10 = 0
+    for s in str(num_n):
+        num_10 *= n
+        num_10 += int(s)
+    return num_10
+
+# def base_n(num_10,n):
+#     str_n = ''
+#     while num_10:
+#         if num_10%n>=10:
+#             return -1
+#         str_n += str(num_10%n)
+#         num_10 //= n
+#     return int(str_n[::-1])
+
+
+def base_n(num_10,n):
+    str_n = ''
+    while num_10:
+        if num_10%n>=10:
+            return -1
+        addNum = num_10%n
+        if addNum == 8:
+          str_n += str(5)
+        else:
+          str_n += str(addNum)
+        num_10 //= n
+    return int(str_n[::-1])
+
+
+next = n
+for i in range(k):
+  n10 = base_10(next, 8)
+  n8 = base_n(n10, 9)
+  next = n8
+
+print(next)
+
