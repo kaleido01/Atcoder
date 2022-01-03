@@ -25,18 +25,20 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n, q = mapInt()
-a = listInt()
+a, b = mapInt()
 
-b = []
 
-ans = 0
-for i in range(n-1):
-  b[i] = a[i+1] - a[i]
-  ans += abs(a[i+1] - a[i])
+"""nを素因数分解"""
+def gcd(x,y):
+  if y==0:     #[1]yが0の時はxを返す
+    return x 
+  else:#[2]y=0以外の時
+    return gcd(y,x%y)
   
-for i in range(q):
-  l, r, v = mapInt()
-  if l >= 1:
-    a[l] 
   
+x = gcd(a, b)
+
+if a* b //x <= 10**18:
+  print(a * b // x)
+else:
+  print("Large")

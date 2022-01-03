@@ -25,40 +25,39 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n = int(input())
+n, q = mapInt()
+a = listInt()
 
-def factorization(n):
-    arr = []
-    temp = n
-    for i in range(2, int(-(-n**0.5//1))+1):
-        if temp%i==0:
-            cnt=0
-            while temp%i==0:
-                cnt+=1
-                temp //= i
-            arr.append([i, cnt])
+b = [0] *(n-1)
 
-    if temp!=1:
-        arr.append([temp, 1])
-
-    if arr==[]:
-        arr.append([n, 1])
-
-    return arr
-
-arr = factorization(n) 
-# print(arr)
-
-count = 0
-
-for v in arr:
-  n, c = v
-  count += c
-  
-x = 1
 ans = 0
-while(count > x):
-  x *= 2
-  ans +=1
-print(ans)
+for i in range(n-1):
+  b[i] = a[i+1] - a[i]
+  ans += abs(a[i+1] - a[i])
+  
+for i in range(q):
+  l, r, v = mapInt()
+  l, r = l-1, r-1
+  if l == 0:
+    pass
+  else:
+    ans -= abs(b[l-1])
+    b[l-1] += v
+    ans += abs(b[l-1])
+
+  if r == n-1:
+    pass
+  else:
+    ans -= abs(b[r])
+    b[r] -= v
+    ans += abs(b[r])
+  # print(a, b)
+  print(ans)
+
+
+
+    
+    
+    
+  
+  

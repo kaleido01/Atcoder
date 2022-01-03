@@ -28,3 +28,13 @@ int1=lambda x:int(x)-1
 # h, w = mapInt()
 a, b, c = mapInt()
 
+
+def gcd(x,y):
+  if y==0:     #[1]yが0の時はxを返す
+    return x 
+  else:#[2]y=0以外の時
+    return gcd(y,x%y)
+  
+  
+r = gcd(a, gcd(b,c))
+print((a//r -1)+(b//r -1)+(c//r -1))

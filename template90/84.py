@@ -25,28 +25,31 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-w, n = mapInt()
+n = int(input())
+s = input()
 
-g = []
+          
+right = 0
+ans = 0
 
-for i in range(n):
-  g.append(listInt())
-  
-dp = inithwv(n+1,w+1,0)
+ok = 0
+ng = 0
 
-
-for i in range(n):
-  for j in range(w+1):
-    l, r, v = g[i]
-    
-    # if j-l >= 0 and j-l+r < w:
-    if j-l >= 0:
-      dp[i+1][j] = max(dp[i][j], dp[i+1][j-l] + v)
+for left in range(n):
+  while(right < n and (ok < 1 or ng < 1) ):
+    if s[right] == "x":
+      ng += 1
     else:
-      dp[i+1][j] = dp[i][j]
-      
-
+      ok += 1
     
-print(dp)
-print(dp[n][w])
+    right +=1
+  
+  if ok >= 1 and ng >= 1:
+    ans += n-right+1
+  # print(left, right)
+  if s[left] == "x":
+    ng -= 1
+  else:
+    ok -= 1
+  
+print(ans)
