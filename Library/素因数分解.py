@@ -25,6 +25,8 @@ factorization(24)
 
 
 
+"""nの約数を列挙"""
+""" 計算量は O(√n)"""
 def divisor_list_s(num):
     divisors = []
     for i in range(1, int(num**0.5)+1):
@@ -35,4 +37,19 @@ def divisor_list_s(num):
             divisors.append(int(num/i))
 #     return divisors # 昇順にしなくてよいならソートは不要
     return sorted(divisors) # 昇順にしたいときはソートする
+divisor_list_s(36)
+
+"""nの約数を列挙"""
+""" 計算量は O(√n)"""
+def eratosthenes(n):
+    count = [0] * n
+    primes = []
+    for i in range(2, n):
+        if count[i] != 0: continue
+        primes.append(i)
+        #　iを因数にもつ全ての値に+1する。
+        for j in range(i, n, i):
+            count[j] += 1
+        
+    return count, primes
 divisor_list_s(36)

@@ -25,29 +25,31 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
+# h, w = mapInt()
 n = int(input())
 
-
-s = input()
-
-
-dp = [ [0 for _ in range(8)] for _ in range(n+1) ]
-
-for i in range(n+1):
-  dp[i][0] = 1
-
-
-target = ["", "a", "t", "c", "o", "d", "e", "r"]
-
-for i in range(1, n+1):
-  for j in range(1, 8):
-    # print(j+1, i)
-    if target[j] == s[i-1]:
-      dp[i][j] += dp[i-1][j-1] + dp[i-1][j]
-      # dp[i][j-1] += dp[i-1][j-1]
-    else:
-      dp[i][j] += dp[i-1][j]
-    dp[i][j] %= MOD
+al = []
+for _ in range(n):
+  al.append(listInt()) 
+  
+e = 0
+for i in range(n-1):
+  for j in range(i+1, n):
+    l1, r1 = al[i]
+    l2, r2 = al[j]
     
-print(dp[n][7])      
-# print(dp)      
+    pn = (r1-l1+1)
+    qn = (r2-l2+1)
+
+    count = 0
+    for p in range(pn):
+      for q in range(qn):
+        x = p + l1
+        y = q + l2
+        # print(x, y)
+        if p+l1 > q+l2:
+          count +=1
+    # print(count, pn*qn)
+    e += count/pn/qn
+    
+print(e)

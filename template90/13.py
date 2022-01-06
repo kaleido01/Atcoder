@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, getpass
 import math, random
-import functools, itertools, collections, heapq, bisect, statistics
+import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
@@ -25,29 +25,43 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n = int(input())
+n, m = mapInt()
+
+g = [ [] for _ in range(n)]
+for i in range(m):
+  a, b, c = mapInt()
+  a, b = a-1, b-1
+  g[a].append([c, b])
+  g[b].append([c, a])
+  
+
+def dijkstra(s):
+    # 始点から各頂点への最短距離
+    d = [float('inf')] * n
+    d[s] = 0
+    # 各頂点が訪問済みかどうか
+    used = [False] * n
+    used[s] = True
+    # 仮の距離を記録するヒープ
+    que = []
+    for e in g[s]:
+        heapq.heappush(que, e)
+    while que:
+        u, v = heapq.heappop(que)
+        if used[v]:
+            continue
+        d[v] = u
+        used[v] = True
+        for e in g[v]:
+            if not used[e[1]]:
+                heapq.heappush(que, [e[0] + d[v], e[1]])
+    return d
+  
 
 
-s = input()
+top = dijkstra(0)
+end = dijkstra(n-1)
 
 
-dp = [ [0 for _ in range(8)] for _ in range(n+1) ]
-
-for i in range(n+1):
-  dp[i][0] = 1
-
-
-target = ["", "a", "t", "c", "o", "d", "e", "r"]
-
-for i in range(1, n+1):
-  for j in range(1, 8):
-    # print(j+1, i)
-    if target[j] == s[i-1]:
-      dp[i][j] += dp[i-1][j-1] + dp[i-1][j]
-      # dp[i][j-1] += dp[i-1][j-1]
-    else:
-      dp[i][j] += dp[i-1][j]
-    dp[i][j] %= MOD
-    
-print(dp[n][7])      
-# print(dp)      
+for i in range(n):
+  print(top[i] + end[i])

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, getpass
 import math, random
-import functools, itertools, collections, heapq, bisect, statistics
+import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
@@ -25,29 +25,38 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n = int(input())
+n, k = mapInt()
 
+ss = input()
 
-s = input()
+  
+c = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+cc = len(c)
 
+q = [deque() for _ in range(cc)]
 
-dp = [ [0 for _ in range(8)] for _ in range(n+1) ]
+for i in range(n):
+  for j in range(cc):
+    if c[j] == ss[i]:
+      q[j].append(i)
+      
+# print(q)
 
-for i in range(n+1):
-  dp[i][0] = 1
-
-
-target = ["", "a", "t", "c", "o", "d", "e", "r"]
-
-for i in range(1, n+1):
-  for j in range(1, 8):
-    # print(j+1, i)
-    if target[j] == s[i-1]:
-      dp[i][j] += dp[i-1][j-1] + dp[i-1][j]
-      # dp[i][j-1] += dp[i-1][j-1]
-    else:
-      dp[i][j] += dp[i-1][j]
-    dp[i][j] %= MOD
+ans = ""
+cp = 0
+for i in range(k):
+  isAppended = False
+  for j in range(cc):
+    if not q[j]: continue
+    while(q[j]):
+      if q[j][0] >= cp:
+        pos = q[j][0]
+        if len(ss) - pos + 1 >= k-i+1:
+          ans += c[j]
+          cp = q[j].popleft()
+          isAppended = True
+        break
+      else: q[j].popleft()
+    if isAppended: break
     
-print(dp[n][7])      
-# print(dp)      
+print(ans)

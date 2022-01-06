@@ -25,29 +25,35 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n = int(input())
+n, k = mapInt()
+  
+"""nの約数を列挙"""
+""" 計算量は O(√n)"""
+def eratosthenes(n):
+    count = [0] * n
+    primes = []
+    for i in range(2, n):
+        if count[i] != 0: continue
+        primes.append(i)
+        #　iを因数にもつ全ての値に+1する。
+        for j in range(i, n, i):
+            count[j] += 1
+        
+    return count, primes
+ans = 0
+# for i in range(2,n+1):
+#   c, p = eratosthenes(i+1)
+#   # print(c)
+#   if len(c) >= k:
+#     ans += 1
+#   # print(p)
 
+# print(ans)
 
-s = input()
-
-
-dp = [ [0 for _ in range(8)] for _ in range(n+1) ]
-
+c, p = eratosthenes(n+1)
+print(c)
 for i in range(n+1):
-  dp[i][0] = 1
+  if c[i] >= k:
+    ans+=1
 
-
-target = ["", "a", "t", "c", "o", "d", "e", "r"]
-
-for i in range(1, n+1):
-  for j in range(1, 8):
-    # print(j+1, i)
-    if target[j] == s[i-1]:
-      dp[i][j] += dp[i-1][j-1] + dp[i-1][j]
-      # dp[i][j-1] += dp[i-1][j-1]
-    else:
-      dp[i][j] += dp[i-1][j]
-    dp[i][j] %= MOD
-    
-print(dp[n][7])      
-# print(dp)      
+print(ans)
