@@ -56,105 +56,133 @@ def int1(x): return int(x)-1
 
 
 sx, sy, tx, ty = mapInt()
-sx += 1000
-sy += 1000
-tx += 1000
-ty += 1000
+# sx += 1000
+# sy += 1000
+# tx += 1000
+# ty += 1000
 
 
-minx = -1000
-maxx = 1000
-m = maxx - minx + 1
+# minx = -1000
+# maxx = 1000
+# m = maxx - minx + 1
 
-que = Deque()
-
-
-done = [[False for _ in range(m)] for _ in range(m)]
+# que = Deque()
 
 
-def dfs(last):
-    lx, ly = last
-    print(que)
-    while que:
-        cx, cy, cur = que.popleft()
-        # print(cx, cy)
-        if cx == lx and cy == ly:
-            print(cx, cy)
-            return cur
-
-        for i in range(4):
-            dx, dy = d4[i]
-            xx = cx + dx
-            yy = cy + dy
-
-            if not(0 <= xx < m and 0 <= yy < m):
-                continue
-            if done[xx][yy]:
-                continue
-            done[xx][yy] = True
-
-            direction = ""
-            if i == 0:
-                direction = "R"
-            if i == 1:
-                direction = "U"
-            if i == 2:
-                direction = "L"
-            if i == 3:
-                direction = "D"
-            cur += direction
-            que.append((xx, yy, cur))
+# done = [[False for _ in range(m)] for _ in range(m)]
 
 
-def reset(start, fill):
-    x, y = start
+# def dfs(last):
+#     lx, ly = last
+#     # print(que)
+#     while que:
+#         cx, cy, cur = que.popleft()
+#         # print(cx, cy, cur)
+#         if cx == lx and cy == ly:
+#             # print(cx, cy, cur)
+#             return cur
 
-    for s in fill:
-        if s == "U":
-            y += 1
-        if s == "R":
-            x += 1
-        if s == "D":
-            y -= 1
-        if s == "L":
-            x -= 1
-        done[x][y] = True
+#         for i in range(4):
+#           dx, dy = d4[i]
+#           xx = cx + dx
+#           yy = cy + dy
 
+#           if not(0 <= xx < m and 0 <= yy < m):
+#               continue
+#           if done[xx][yy]:
+#               continue
+#           done[xx][yy] = True
 
-que.append((sx, sy, ""))
-done[sx][sy] = True
-t = dfs((tx, ty))
-print(t)
-
-# 1回目の
-done = [[False for _ in range(m)] for i in range(m)]
-reset((sx, sy), t)
-done[sx][sy] = False
-done[tx][ty] = True
-que = Deque()
-que.append((tx, ty, t))
-p = dfs((sx, sy))
-print(p)
-
-
-done = [[False for _ in range(m)] for i in range(m)]
-done[sx][sy] = True
-reset((sx, sy), p)
-done[tx][ty] = False
-que = Deque()
-que.append((sx, sy, p))
-q = dfs((tx, ty))
-print(q)
+#           temp = ""
+#           t = cur.copy()
+#           if i == 0:
+#               temp = "R"
+#           elif i == 1:
+#               temp = "U"
+#           elif i == 2:
+#               temp = "L"
+#           elif i == 3:
+#               temp = "D"
+#           t.append(temp)
+#           # print(temp, ncur)
+#           que.append((xx, yy, t))
 
 
-done = [[False for _ in range(m)] for i in range(m)]
-done[sx][sy] = False
-done[tx][ty] = True
-reset((sx, sy), q)
-que = Deque()
-que.append((tx, ty, q))
+# def reset(start, fill):
+#   x, y = start
 
-ans = dfs((sx, sy))
+#   for s in fill:
+#     if s == "U":
+#         y += 1
+#     if s == "R":
+#         x += 1
+#     if s == "D":
+#         y -= 1
+#     if s == "L":
+#         x -= 1
+#     done[x][y] = True
 
 
-print(*ans)
+# que.append([sx, sy, []])
+# done[sx][sy] = True
+# t = dfs((tx, ty))
+# # print(t)
+# # print(done)
+
+# # 1回目の
+# done = [[False for _ in range(m)] for i in range(m)]
+# reset((sx, sy), t)
+# done[sx][sy] = False
+# done[tx][ty] = True
+# que = Deque()
+# que.append((tx, ty, t))
+# p = dfs((sx, sy))
+# # print(p)
+# # print(done)
+
+
+# done = [[False for _ in range(m)] for i in range(m)]
+# reset((sx, sy), p)
+# done[sx][sy] = True
+# done[tx][ty] = False
+# # print(done[tx][ty])
+# que = Deque()
+# que.append((sx, sy, p))
+# q = dfs((tx, ty))
+# # print(q)
+
+
+# done = [[False for _ in range(m)] for i in range(m)]
+# reset((sx, sy), q)
+# done[sx][sy] = False
+# done[tx][ty] = True
+# que = Deque()
+# que.append((tx, ty, q))
+
+# ans = dfs((sx, sy))
+# print("".join(ans))
+
+# # print(*ans)
+
+
+diffx = tx - sx
+diffy = ty - sy
+
+ans = []
+# 1回目
+ans.append("R"*diffx)
+ans.append("U"*diffy)
+ans.append("L"*diffx)
+ans.append("D"*diffy)
+
+# 2回目
+ans.append("D")
+ans.append("R"*(diffx+1))
+ans.append("U"*(diffy+1))
+ans.append("L")
+ans.append("U")
+ans.append("L"*(diffx+1))
+ans.append("D"*(diffy+1))
+ans.append("R")
+
+print("".join(ans))

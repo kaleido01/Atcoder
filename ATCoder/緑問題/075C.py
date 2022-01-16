@@ -1,0 +1,103 @@
+# -*- coding: utf-8 -*-
+import sys, getpass
+import math, random
+import functools, itertools, collections, heapq, bisect
+from collections import Counter, defaultdict, deque
+sys.setrecursionlimit(10**9)
+INF=10**18
+MOD=10**9+7 # 998244353
+# d4 = [(1,0),(0,1),(-1,0),(0,-1)]
+# d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
+# d6 = [(2,0),(1,1),(-1,1),(-2,0),(-1,-1),(1,-1)]  # hexagonal layout
+input=lambda: sys.stdin.readline().rstrip()
+intInput = lambda: int(input())
+mapInt = lambda: map(int, input().split())
+listInt = lambda: list(map(int, input().split()))
+
+init0 = lambda n: [0 for _ in range(n)]
+inithwv = lambda h, w, v: [[v for _ in range(w)] for _ in range(h)]
+inithw = lambda h: [ list(input()) for _ in range(h)]
+# initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
+initDp = lambda n:[[] for _ in range(n)]
+bit = lambda n, k:((n >> k) & 1) # nのkビット目
+YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+YESNO=lambda b: bool([print('YES')] if b else print('NO'))
+int1=lambda x:int(x)-1
+
+
+n, m = mapInt()
+
+grid = [ [False for i in range(m)] for _ in range(m)]
+nodes = []
+grids = [[] for _ in range(n)]
+
+for i in range(m):
+  a, b = mapInt()
+  a -= 1
+  b -= 1
+  # grid[a][b] = True
+  # grid[b][a] = True
+  nodes.append((a, b))
+  # nodes[a].append(b)
+  # grids[b].append(a)
+
+
+
+class UnionFind:
+    # 参考 https://note.nkmk.me/python-union-find/
+    def __init__(self, n):
+        self.parents = [-1] * n   # 負は親（数値は木の大きさ）、非負は子（数値は親インデックス）
+
+    def root(self, x):       # 木の根を求める
+        if (self.parents[x] < 0):
+            return x
+        else:
+            self.parents[x] = self.root(self.parents[x])   # 経路圧縮
+            return self.parents[x]
+
+    def union(self, x, y):   # 木を結合する
+        x = self.root(x)
+        y = self.root(y)
+        if x == y:
+            return
+        if self.parents[x] > self.parents[y]:
+            x, y = y, x
+        self.parents[x] += self.parents[y]
+        self.parents[y] = x
+
+    def size(self, x):       # 木のサイズ
+        return -self.parents[self.root(x)]
+
+    def same(self, x, y):    # 同じ木に属するか
+        return self.root(x) == self.root(y)
+
+    def roots(self):
+        return [i for i, x in enumerate(self.parents) if x < 0]
+
+    def group_count(self):   # グループ数
+        return len(self.roots())
+      
+
+
+
+
+
+
+ans = 0
+for i in range(m):
+  a, b = nodes[i]
+  # 橋のつながりを切る
+  # grid[a][b] = False
+  # grid[b][a] = False
+  
+  uf = UnionFind(n)
+  for j in range(m):
+    x, y = nodes[j]
+    if i == j: continue
+    uf.union(x, y)
+  
+  if not uf.same(a, b):
+    ans +=1
+
+    
+print(ans)
