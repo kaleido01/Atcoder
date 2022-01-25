@@ -21,4 +21,28 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 from operator import itemgetter
 
-n = input()
+n, m = mapInt()
+
+a = [False] * (n+1)
+for i in range(m):
+  a[int(input())] = True
+  
+
+dp = [0] *(n+1)
+
+dp[0] = 1
+
+for i in range(1, n+1):
+  # 1dan
+  if a[i]: continue
+  if i-1 >= 0:
+    dp[i] += dp[i-1]
+  #dan
+  if i-2 >= 0:
+    dp[i] += dp[i-2]
+  dp[i] %= MOD
+  
+# print(dp)
+print(dp[n])
+
+  

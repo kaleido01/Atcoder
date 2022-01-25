@@ -21,4 +21,9 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 from operator import itemgetter
 
-n = input()
+p, q, r = mapInt()
+ans = 0
+
+ans = min( p+q, q+r, r+p)
+
+print(ans)

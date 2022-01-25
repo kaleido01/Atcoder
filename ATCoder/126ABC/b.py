@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+from curses import nocbreak
 import sys, getpass
 import math, random
-import functools, itertools, collections, heapq, bisect
+import functools, itertools, collections, heapq, bisect, statistics
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
@@ -21,4 +22,28 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 from operator import itemgetter
 
-n = input()
+s = input()
+
+x = s[:2]
+y = s[2:]
+# print(x, y)
+
+def tuki(x):
+  return 1 <= int(x) <= 12
+
+def year(x):
+  return not(x[0] == 0 and x[1] == 0)
+
+if tuki(x) and year(y) and year(x) and tuki(y):
+  print("AMBIGUOUS")
+  sys.exit()
+if year(x) and tuki(y):
+  print("YYMM")
+  sys.exit()
+if year(y) and tuki(x):
+  print("MMYY")
+  sys.exit()
+  
+print("NA")
+
+    

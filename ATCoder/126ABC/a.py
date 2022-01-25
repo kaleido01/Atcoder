@@ -21,4 +21,10 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 from operator import itemgetter
 
-n = input()
+n, k = mapInt()
+s = list(input())
+
+x = s[k-1]
+s[k-1] = x.lower()
+
+print("".join(s))

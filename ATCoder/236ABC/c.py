@@ -21,4 +21,21 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 from operator import itemgetter
 
-n = input()
+n, m = mapInt()
+s = list(input().split())
+t = list(input().split())
+
+x = {}
+for i in range(n):
+  x[s[i]] = i
+
+
+ans = [False] * (n)
+
+
+for i in range(m):
+  p = x[t[i]]
+  ans[p] = True
+
+for v in ans:
+  YesNo(v)

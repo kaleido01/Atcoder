@@ -6,9 +6,13 @@ count = 0
 
 s = 100
 while(True):
-  count +=1
-  s += math.floor(s*0.01)
-  if s>=n:
+  count += 1
+  x = list(str(s))
+  x = x[:len(x)-2]
+  # print(x)
+  # print(int("".join(x)))
+  s += int("".join(x))
+  if s >= n:
     print(count)
     sys.exit()
   

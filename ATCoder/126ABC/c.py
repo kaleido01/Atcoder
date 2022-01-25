@@ -21,4 +21,16 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 from operator import itemgetter
 
-n = input()
+n, k = mapInt()
+
+ans = 0
+for i in range(1, n+1):
+  temp = i
+  p = 0
+  while(temp <= k-1):
+    temp *= 2
+    p +=1
+  
+  ans += (1/n) * (1/2) ** p
+
+print(ans)

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from curses import nocbreak
+from re import L
 import sys, getpass
 import math, random
-import functools, itertools, collections, heapq, bisect
+import functools, itertools, collections, heapq, bisect, statistics
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
@@ -21,4 +23,18 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 from operator import itemgetter
 
-n = input()
+n = int(input())
+a = listInt()
+
+
+cnt = [0] * (n+1)
+
+for i in range(4*n-1):
+  cnt[a[i]] += 1
+  
+  
+# print(cnt)
+for i in range(1, n+1):
+  if cnt[i] == 3:
+    print(i)
+    sys.exit()
