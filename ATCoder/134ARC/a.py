@@ -25,5 +25,34 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n = int(input())
-h, a = mapInt()
+n, l, w = mapInt()
+
+a = listInt()
+
+dic = {}
+
+left = 0
+if a[0] > 0:
+  dic[(0, a[0])] = True
+  
+for i in range(n-1):
+  p = a[i]
+  q = a[i+1]
+  if p + w < q:
+    dic[(p+w, q)] = True
+    
+if a[-1] + w < l:
+  dic[(a[-1] + w, l)] = True
+
+
+ans = 0
+
+
+# print(dic)
+for (x, y) in dic.keys():
+  cnt = (y - x)//w
+  if (y - x) % w !=0:
+    cnt +=1
+    
+  ans += cnt
+print(ans)

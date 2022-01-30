@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, getpass
 import math, random
-import functools, itertools, collections, heapq, bisect, statistics
+import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
@@ -15,6 +15,8 @@ listInt = lambda: list(map(int, input().split()))
 
 init0 = lambda n: [0 for _ in range(n)]
 init1 = lambda n: [-1 for _ in range(n)]
+initAny = lambda n, a: [a for _ in range(n)]
+
 
 inithwv = lambda h, w, v: [[v for _ in range(w)] for _ in range(h)]
 inithw = lambda h: [ list(input()) for _ in range(h)]
@@ -25,5 +27,7 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n = int(input())
-h, a = mapInt()
+# h, w = mapInt()
+n, k = mapInt()
+
+a = listInt()

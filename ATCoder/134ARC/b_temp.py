@@ -21,9 +21,43 @@ inithw = lambda h: [ list(input()) for _ in range(h)]
 # initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
 initDp = lambda n:[[] for _ in range(n)]
 bit = lambda n, k:((n >> k) & 1) # nのkビット目
-# YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 n = int(input())
-h, a = mapInt()
+s = input()
+
+lis = [ [] for i in range(26)]
+
+for i in range(n):
+  
+  heapq.heappush(lis[ord(s[i]) - ord('a')], -1 * i)
+  
+# print(lis)
+last = INF
+change = []
+for i in range(n // 2):
+  t = s[i]
+  cur = 0
+  while(cur < 26 and cur < ord(t) - ord('a')):
+    ok = False
+    while(lis[cur]):
+      # print(cur)
+      okIndex = -1 * heapq.heappop(lis[cur])
+      if okIndex < last and i < okIndex:
+        last = okIndex
+        change.append((i, okIndex))
+        ok = True
+        break
+    if ok: break        
+    cur += 1
+
+
+s = list(s)
+# print(change)
+for temp1, temp2 in change:
+  s[temp1], s[temp2] = s[temp2], s[temp1]
+
+print("".join(s))
+    

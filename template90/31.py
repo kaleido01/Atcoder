@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, getpass
 import math, random
-import functools, itertools, collections, heapq, bisect, statistics
+import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
@@ -26,4 +26,41 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 n = int(input())
-h, a = mapInt()
+
+w = listInt()
+b = listInt()
+
+d = [ [-1 for _ in range(1301)] for _ in range(51)]
+# d[0][1] = 0
+
+for i in range(51):
+  for j in range(1301):
+    
+    if i == 0 and j <= 1:
+      d[i][j] = 0
+      continue
+    # 白遷移
+    used = [False] * 666
+    if i >= 1 and i + j <= 1300:
+      used[d[i-1][j+i]] = True
+
+    #黒遷移
+    for k in range(1, j // 2+1):
+      used[d[i][j-k]] = True
+      
+    temp = 0
+    while used[temp]: temp +=1
+
+    d[i][j] = temp
+
+xor = 0
+for i in range(n):
+  wi = w[i]
+  bi = b[i]
+  xor ^= d[wi][bi]
+
+# print(d)
+if xor == 0:
+  print("Second")
+else:
+  print("First")

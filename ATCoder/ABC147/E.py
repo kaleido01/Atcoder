@@ -13,16 +13,12 @@ dp =[[[False for _ in range(m)] for _ in range(w)] for _ in range(h)]
 
 dp[0][0][abs(a[0][0]-b[0][0])] = True
 
-# for i in range(h-1):
-#   for k in range(m):
-#     dp[i][0][k] =
 
 for i in range(h):
   for j in range(w):
     for k in range(m):
       if dp[i][j][k]:
-        if i == h-1 and j == w-1:
-          continue
+        if i == h-1 and j == w-1: continue
         elif i == h-1:
           y = abs(a[i][j+1]-b[i][j+1])
           dp[i][j+1][abs(k - y)] =True

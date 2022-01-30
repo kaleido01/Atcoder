@@ -21,9 +21,36 @@ inithw = lambda h: [ list(input()) for _ in range(h)]
 # initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
 initDp = lambda n:[[] for _ in range(n)]
 bit = lambda n, k:((n >> k) & 1) # nのkビット目
-# YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-n = int(input())
-h, a = mapInt()
+h, n = mapInt()
+
+m = [ listInt() for i in range(n)]
+
+dp = [ [ INF for i in range(h+1)] for _ in range(n+1)]
+for i in range(n+1):
+  dp[i][h] = 0
+
+for i in range(1, n+1):
+  d, cost = m[i-1]
+  for j in range(h, 0, -1):
+    jj = max(0, j-d)
+    # print(dp[i][j])
+    # if j == 0:
+    #   dp[i][0] = min(dp[i-1][0], dp[i][0])
+    #   continue
+    dp[i][j] = min(dp[i-1][j], dp[i][j])
+    if dp[i][j] != INF:
+     dp[i][jj] = min(dp[i][jj], dp[i-1][jj], dp[i][j] + cost)
+    else:
+      continue
+      # if dp[i-1][j] != INF:=./
+      #   dp[i][jj] = min(dp[i-1][jj], dp[i][j] + cost)
+      # else:
+      # dp[i][jj] = dp[i-1][jj]
+      
+    
+# print(dp)
+print(dp[n][0])
