@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from re import L
 import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
@@ -27,9 +28,30 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
-
+x, y, z, k = mapInt()
 
 a = listInt()
+b = listInt()
+c = listInt()
+
+a.sort(reverse=True)
+b.sort(reverse=True)
+c.sort(reverse=True)
+
+lis = []
+
+for i in range(x-1):
+  lis.append(a[i] - a[i+1])
+for i in range(y-1):
+  lis.append(b[i] - b[i+1])
+for i in range(z-1):
+  lis.append(c[i] - c[i+1])
+
+
+lis.sort()
+
+v = a[0]+b[0]+c[0]
+print(v)
+for i in range(k-1):
+  print(v-lis[i])
+

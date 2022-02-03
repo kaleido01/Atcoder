@@ -28,8 +28,27 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+# n, k = mapInt()
+n = int(input())
+s = input()
+
+ans = []
 
 
-a = listInt()
+
+def bfs(pos):
+  while pos < n and s[pos] == "R":
+    ans.append(pos)
+    pos+=1
+  
+  if pos == n:
+    ans.append(pos)
+    return
+  end = pos
+  bfs(pos+1)
+  ans.append(end)
+  
+  
+
+bfs(0)
+print(*ans)

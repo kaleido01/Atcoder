@@ -27,9 +27,9 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
-
-
-a = listInt()
+s = input()
+p =[]
+for i in range(0, len(s), 2):
+  p.append(s[i])
+  
+print("".join(p))

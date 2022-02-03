@@ -3,6 +3,7 @@ import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
+from typing import Deque
 sys.setrecursionlimit(10**9)
 INF=10**18
 MOD=10**9+7 # 998244353
@@ -27,9 +28,47 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+n, m = mapInt()
+
+g = [ [] for i in range(n)]
+
+for i in range(m):
+  l, r, d = mapInt()
+  l -= 1
+  r -= 1
+  
+  g[l].append((r, d))
+  g[r].append((l, -d))
 
 
-a = listInt()
+done = [False] * n
+pos = [INF] * n
+
+q = Deque()
+for i in range(n):
+  if done[i]: continue
+  done[i] = True
+  q.append(i)
+  ok = True
+  while(q):
+    cpos = q.popleft()
+    nodes = g[cpos]
+    if pos[cpos] == INF:
+      pos[cpos] = 0
+    for node in nodes:
+      ne, d = node
+      if pos[ne] == INF:
+        pos[ne] = pos[cpos] + d
+      else:
+        if pos[ne] != pos[cpos] + d:
+          ok = False
+      if done[ne]: continue
+      done[ne] = True
+      q.append(ne)
+  if not ok:
+    print("No")
+    exit()
+print("Yes")        
+      
+
+  

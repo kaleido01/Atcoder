@@ -28,8 +28,17 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
-
+n = int(input())
 
 a = listInt()
+b = listInt()
+
+ans = 0
+for i in range(n):
+  temp = 0
+  for x in range(0, i+1):
+    temp += a[x]
+  for y in range(i, n):
+    temp += b[y]
+  ans = max(ans, temp)
+print(ans)

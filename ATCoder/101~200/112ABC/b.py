@@ -27,9 +27,17 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+n, T = mapInt()
 
+ans = INF
 
-a = listInt()
+for i in range(n):
+  c,t = mapInt()
+  if t <= T:
+    ans = min(ans, c)
+  
+
+if ans == INF:
+  print("TLE")
+else:
+  print(ans)

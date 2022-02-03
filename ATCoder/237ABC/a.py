@@ -28,8 +28,12 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+# n, k = mapInt()
+n = int(input())
 
+if -2 ** 31 <= n < 2 ** 31:
+  print("Yes")
+else:
+  print("No")
 
-a = listInt()
+# a = listInt()

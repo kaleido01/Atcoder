@@ -27,9 +27,36 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+s = input()
+n = len(s)
+cntl = 0
+cntr = 0
+for i in range(n-1, -1, -1):
+  if s[i] == "a":
+    cntr += 1
+  else:
+    break
+for i in range(n):
+  if s[i] == "a":
+    cntl += 1
+  else:
+    break
+    
+if cntl > cntr:
+  print("No")
+  sys.exit()
+  
+s = s[cntl: n - cntr]
+n = len(s)
+# print(s)
 
-
-a = listInt()
+left = 0
+right = n-1
+while(left < right):
+  if s[left] == s[right]:
+    left += 1
+    right -=1
+  else:
+    print("No")
+    sys.exit()
+print("Yes")

@@ -28,8 +28,47 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
-
+n = int(input())
 
 a = listInt()
+ans = 0
+# for i in range(n):
+#   if i+1 != a[i]: continue
+#   if i == n-1: 
+#     ans+=1
+#     print("aaa")
+#     break
+  
+#   # iとi+1でスワップ
+#   if i+2 == a[i+1]:
+#     ans +=1
+#     i+=1
+#     if i >= n:break
+#     print("hi")
+#   else:
+#     ans +=1
+#     print("a")
+
+i = 0
+while i < n:
+  if i+1 != a[i]: 
+    i +=1
+    continue
+  if i == n-1: 
+    ans+=1
+    break
+  
+  # iとi+1でスワップ
+  if i+2 == a[i+1]:
+    ans +=1
+    i+=2
+  else:
+    ans +=1
+    i +=1
+    
+print(ans)
+
+    
+    
+    
+    

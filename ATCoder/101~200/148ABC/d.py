@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from re import L
 import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
@@ -28,8 +29,18 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
-
-
+# n, k = mapInt()
+n = int(input())
 a = listInt()
+
+
+cnt = 0
+
+for i in range(n):
+  if a[i] == cnt+1:
+    cnt +=1
+    
+if cnt == 0:
+  print(-1)
+else:
+  print(n-cnt)

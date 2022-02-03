@@ -28,8 +28,17 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+n = int(input())
 
+if n % 2 == 1:
+  print(0)
+  exit()
 
-a = listInt()
+# n /= 10
+ans = 0
+p = 10
+while(p <= n):
+  ans += n // p
+  p *= 5
+print(ans)
+

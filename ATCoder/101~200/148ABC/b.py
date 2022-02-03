@@ -28,8 +28,13 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+n = int(input())
+
+s, t = input().split()
 
 
-a = listInt()
+ans = ""
+for i in range(n):
+  ans += s[i] + t[i]
+  
+print(ans)

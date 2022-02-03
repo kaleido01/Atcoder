@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from re import L
 import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
@@ -27,9 +28,29 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+n, m = mapInt()
 
 
-a = listInt()
+
+def divisor_list_s(num):
+    divisors = []
+    for i in range(1, int(num**0.5)+1):
+        if num % i == 0:
+            divisors.append(i)  
+            if i**2 == num:
+                continue
+            divisors.append(int(num/i))
+#     return divisors # 昇順にしなくてよいならソートは不要
+    return sorted(divisors) # 昇順にしたいときはソートする
+  
+  
+lis = divisor_list_s(m)
+
+ans = 1
+for v in lis:
+  target = m // v
+  if target >= n:
+    ans = v
+
+
+print(ans)

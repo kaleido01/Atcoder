@@ -28,8 +28,12 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
 # n = int(input())
+n = int(input())
+a = int(input())
+b = int(input())
 
+n -= a
+n %=b
 
-a = listInt()
+print(n)

@@ -27,9 +27,30 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n, k = mapInt()
-# n = int(input())
+n = int(input())
 
+con = []
 
-a = listInt()
+for i in range(n):
+  con.append(listInt())
+  
+
+for cx in range(101):
+  for cy in range(101):
+    H = 0
+    ok = True
+    for i in range(n):
+      x, y, h = con[i]
+      if h != 0:
+        H = h + abs(cx-x) + abs(cy-y)
+      
+    for i in range(n):
+      x, y, h = con[i]
+      if h != max(H - abs(cx-x) - abs(cy-y), 0):
+        ok = False
+      
+      
+    if ok:
+      # print(ok)
+      print(cx, cy, H)
+      exit()
