@@ -28,26 +28,27 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-# n, k = mapInt()
-# n = int(input())
-s = list(input())
-s.reverse()
+n = int(input())
 
-n = len(s)
+dist0 = [0] * (n+1)
 
-ans = 0
-
-# current = 0
-lis = [ [] for i in range(10)]
-for d in range(10):
-  current = d
-  for i in range(n):
-    p = (int(s[i]) * 10 ** i) % 2019
-    print(p)
-    if (p + current) % 2019 == 0:
-      ans += 1
-    current = (p + current) % 2019
-    lis[d].append(current)
+for i in range(2, n+1):
+  print("?", 1, i)
+  sys.stdout.flush()
+  dist0[i] = int(input())
   
-print(ans, lis)
-  
+index = 0
+m = 0
+for i in range(1, n+1):
+  if m <= dist0[i]:
+    m = dist0[i]
+    index = i
+
+disti = [0] * (n+1)
+for i in range(1, n+1):
+  print("?", index, i)
+  sys.stdout.flush()
+  disti[i] = int(input())
+    
+
+print("!", max(disti))

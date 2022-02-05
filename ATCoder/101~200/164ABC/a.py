@@ -29,5 +29,7 @@ int1=lambda x:int(x)-1
 
 # h, w = mapInt()
 n, k = mapInt()
-
-a = listInt()
+if n <= k:
+  print("unsafe")
+else:
+  print("safe")

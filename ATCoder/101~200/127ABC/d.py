@@ -28,26 +28,50 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-# n, k = mapInt()
-# n = int(input())
-s = list(input())
-s.reverse()
+n, m = mapInt()
 
-n = len(s)
+
+
+a = listInt()
+
+
+pq = []
+dic = {}
+
+for i in range(n):
+  if a[i] in dic:
+    dic[a[i]] +=1
+  else:
+    dic[a[i]] =1
+
+for k, v in dic.items():
+  heapq.heappush(pq, (k, v))
+
+
+for i in range(m):
+  b, c = mapInt()
+  
+  cnt = 0
+  while(len(pq) > 0 and cnt < b):
+    # print(pq)
+    index, count = heapq.heappop(pq)
+    if c <= index: 
+      heapq.heappush(pq, (index, count))
+      break
+    if cnt + count > b:
+      count -= b - cnt
+      heapq.heappush(pq, (index, count))
+      cnt = b
+    else:
+      cnt += count
+  # print(cnt, c)
+  if cnt > 0:
+    heapq.heappush(pq, (c, cnt))
 
 ans = 0
-
-# current = 0
-lis = [ [] for i in range(10)]
-for d in range(10):
-  current = d
-  for i in range(n):
-    p = (int(s[i]) * 10 ** i) % 2019
-    print(p)
-    if (p + current) % 2019 == 0:
-      ans += 1
-    current = (p + current) % 2019
-    lis[d].append(current)
+# print(pq)
+while pq:
+  index, count = heapq.heappop(pq)
+  ans += index * count
   
-print(ans, lis)
-  
+print(ans)

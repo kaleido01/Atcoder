@@ -27,27 +27,23 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-# n, k = mapInt()
-# n = int(input())
-s = list(input())
-s.reverse()
+s = input()
 
-n = len(s)
+ans = []
 
-ans = 0
 
-# current = 0
-lis = [ [] for i in range(10)]
-for d in range(10):
-  current = d
-  for i in range(n):
-    p = (int(s[i]) * 10 ** i) % 2019
-    print(p)
-    if (p + current) % 2019 == 0:
-      ans += 1
-    current = (p + current) % 2019
-    lis[d].append(current)
+index = 0
+cnt = 0
+while index < len(s):
+  x = s[index]
+  while(index < len(s) and x == s[index]):
+    cnt +=1
+    index +=1
   
-print(ans, lis)
+  ans.append(x)
+  ans.append(str(cnt))
+  cnt = 0
   
+
+print("".join(ans))
+

@@ -6,7 +6,7 @@ from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
 MOD=10**9+7 # 998244353
-# d4 = [(1,0),(0,1),(-1,0),(0,-1)]
+d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
 # d6 = [(2,0),(1,1),(-1,1),(-2,0),(-1,-1),(1,-1)]  # hexagonal layout
 input=lambda: sys.stdin.readline().rstrip()
@@ -19,7 +19,7 @@ initAny = lambda n, a: [a for _ in range(n)]
 
 
 inithwv = lambda h, w, v: [[v for _ in range(w)] for _ in range(h)]
-inithw = lambda h: [ list(input()) for _ in range(h)]
+inithw = lambda h: [ listInt() for _ in range(h)]
 # initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
 initDp = lambda n:[[] for _ in range(n)]
 bit = lambda n, k:((n >> k) & 1) # nのkビット目
@@ -27,27 +27,40 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-# n, k = mapInt()
-# n = int(input())
-s = list(input())
-s.reverse()
+ax, ay, bx, by = mapInt()
+n = int(input())
 
-n = len(s)
-
-ans = 0
-
-# current = 0
-lis = [ [] for i in range(10)]
-for d in range(10):
-  current = d
-  for i in range(n):
-    p = (int(s[i]) * 10 ** i) % 2019
-    print(p)
-    if (p + current) % 2019 == 0:
-      ans += 1
-    current = (p + current) % 2019
-    lis[d].append(current)
+p = []
+for i in range(n):
+  p.append(listInt())
   
-print(ans, lis)
   
+  
+
+def intersect(p1, p2, p3, p4):
+    tc1 = (p1[0] - p2[0]) * (p3[1] - p1[1]) + (p1[1] - p2[1]) * (p1[0] - p3[0])
+    tc2 = (p1[0] - p2[0]) * (p4[1] - p1[1]) + (p1[1] - p2[1]) * (p1[0] - p4[0])
+    td1 = (p3[0] - p4[0]) * (p1[1] - p3[1]) + (p3[1] - p4[1]) * (p3[0] - p1[0])
+    td2 = (p3[0] - p4[0]) * (p2[1] - p3[1]) + (p3[1] - p4[1]) * (p3[0] - p2[0])
+    return tc1*tc2<0 and td1*td2<0
+
+cnt = 0
+for i in range(n):
+  p1= (ax,ay)
+  p2 = (bx, by)
+  if i == n-1:
+    if intersect(p1, p2, p[i], p[0]):
+      cnt +=1
+  else:
+    if intersect(p1, p2, p[i], p[i+1]):
+      cnt +=1
+    
+
+
+# print("cnt", cnt)
+if cnt <2:
+  print(1)
+elif cnt == 2:
+  print(2)
+else:
+  print(cnt//2 + 1)

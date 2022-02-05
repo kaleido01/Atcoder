@@ -28,7 +28,13 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-# n = int(input())
-n, k = mapInt()
+n = int(input())
 
-a = listInt()
+dic = {}
+
+for i in range(n):
+  s = input()
+  if s not in dic:
+    dic[s] = True
+
+print(len(dic.items()))

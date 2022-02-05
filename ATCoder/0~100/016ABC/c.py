@@ -27,27 +27,52 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-# n, k = mapInt()
-# n = int(input())
-s = list(input())
-s.reverse()
+n, m = mapInt()
 
-n = len(s)
+g = [ [] for i in range(n)]
 
-ans = 0
-
-# current = 0
-lis = [ [] for i in range(10)]
-for d in range(10):
-  current = d
-  for i in range(n):
-    p = (int(s[i]) * 10 ** i) % 2019
-    print(p)
-    if (p + current) % 2019 == 0:
-      ans += 1
-    current = (p + current) % 2019
-    lis[d].append(current)
+for i in range(m):
+  a, b = mapInt()
+  a -=1
+  b -=1
+  g[a].append(b)
+  g[b].append(a)
   
-print(ans, lis)
   
+  
+
+done = [False] * n
+# def dfs(pos, isFirst):
+  
+#   nodes = g[pos]
+#   cnt = 0
+#   for node in nodes:
+#     if done[node]: continue
+#     done[node] = True
+#     if not isFirst:
+#       cnt +=1
+    
+#     cnt += dfs(node, False)
+    
+#   return cnt
+  
+  
+  
+q = deque()
+for i in range(n):
+  done = [False] * n
+  done[i] = True
+  for node in g[i]:
+    done[node] = True
+    q.append(node)
+  ans = 0
+  while(q):
+    pos = q.popleft()
+    nodes = g[pos]
+    for node in nodes:
+      if done[node]: continue
+      done[node] = True
+      ans +=1
+      
+    
+  print(ans)

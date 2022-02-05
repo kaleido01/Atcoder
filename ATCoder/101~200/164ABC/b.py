@@ -23,13 +23,21 @@ inithw = lambda h: [ list(input()) for _ in range(h)]
 # initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
 initDp = lambda n:[[] for _ in range(n)]
 bit = lambda n, k:((n >> k) & 1) # nのkビット目
-# YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
 # n = int(input())
 
-n, k = mapInt()
+a, b, c, d = mapInt()
 
-a = listInt()
+
+x = c // b
+if c % b != 0:
+  x +=1
+y = a // d
+if a%d !=0:
+  y +=1
+
+YesNo(x <= y)
