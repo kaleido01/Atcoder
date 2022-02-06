@@ -24,55 +24,17 @@ YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
 
-h , w = mapInt()
+h, w = mapInt()
 
-grid = inithw(h)
+s = [ list(input())for i in range(h)]
 
 ans = 0
-
-left = [0, 0]
-right = [0, 0]
-start = False
-for i in range(1, h):
-  count = 0
-  for j in range(1, w):
-    p = -1
-    q = -1
-    if grid[i][j] == "#":
-      if count == 0:
-        p = j
-        count += 1
-      else:
-        q = j
-        count = 2
-  # print("count", count)
-  if count == 1:
-    if not(p == left[0] and left[0] == left[1]):
-      ans += 1
-      left[0], left[1] = p, left[0]
-    if not(p == right[0] and right[0] == right[1]):
-      ans += 1
-      right[0], right[1] = p, right[0]
-  if count == 2:
-    if not(p == left[0] and left[0] == left[1]):
-      ans += 1
-      left[0], left[1] = p, left[0]
-    if not(q == right[0] and right[0] == right[1]):
-      ans += 1
-      right[0], right[1] = q, right[0]
-  
-  # print(ans)
-  if start:
-    continue
-  if not start and count == 1:
-    ans = 1
-    start = True
-  if not start and count == 2:
-    ans = 2
-    start = True
-  
-
-if ans <=2:
-  print(4)
-else:
-  print(ans)
+for i in range(h-1):
+  for j in range(w-1):
+    cnt = 0
+    for dy in range(2):
+      for dx in range(2):
+        if s[i+dy][j+dx] == "#": cnt +=1
+    if cnt == 1 or cnt == 3: ans+=1
+    
+print(ans)

@@ -27,9 +27,46 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
+n = int(input())
 # s = input()
 # h, w = mapInt()
-n, k = mapInt()
+# n, k = mapInt()
 
-a = listInt()
+# a = listInt()
+
+
+
+def solve(a, s):
+  can = True
+  # 前の桁が繰り上がりしてるか
+  now = 0
+  for j in range(60):
+    #そのビットを立てる時
+    if (a >> j) & 1:
+      if (s >> j) & 1:
+        if now == 0:
+          can = False
+          break
+      else:
+        if now == 1:
+          can = False
+        now = 1
+    #そのビットを立てない(繰り上がりがあってはだめ)
+    else:
+      if (s >> j) & 1:
+        if now == 1:
+          now = 0
+        else:
+          now = 0
+  YesNo(not now and can)
+          
+      
+        
+        
+        
+
+for i in range(n):
+  a, s = mapInt()
+  solve(a, s)
+  
+

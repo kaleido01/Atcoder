@@ -27,9 +27,29 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
+n = int(input())
 # s = input()
 # h, w = mapInt()
-n, k = mapInt()
+# n, k = mapInt()
 
 a = listInt()
+
+dic = {0: True}
+
+cur = 0
+for i in range(n):
+  cur += a[i]
+  cur %= 360
+  dic[cur] = True
+  
+# print(dic)
+x = sorted(dic.keys())
+
+
+ans = 0
+for i in range(len(x)):
+  if i == len(x) -1:
+    ans = max(ans, 360 - x[i])
+  else:
+    ans = max(ans, x[i+1] - x[i])
+print(ans)

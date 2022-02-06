@@ -27,9 +27,11 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
+n = int(input())
 # s = input()
 # h, w = mapInt()
-n, k = mapInt()
+# n, k = mapInt()
 
-a = listInt()
+# a = listInt()
+
+YesNo(2**n > n*n)
