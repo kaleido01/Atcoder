@@ -23,17 +23,23 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
 
-c = a+b
+n =int(input())
+a = listInt()
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+
+ans = [0] * n
+
+for i in range(n):
+  t = a[i]
+  c = 1
+  cnt = 0
+  while(t != 1):
+    if t % 2 == 0:
+      t //= 2
+      cnt +=1
+    else:
+      break
+  ans[i] = cnt
+
+print(sum(ans))

@@ -1,8 +1,28 @@
-from collections import defaultdict
+# -*- coding: utf-8 -*-
+import sys
+
+sys.setrecursionlimit(10**9)
+INF=10**18
+MOD=10**9+7
+input=lambda: sys.stdin.readline().rstrip()
+mapInt = lambda: map(int, input().split())
+listInt = lambda: list(map(int, input().split()))
+
+init0 = lambda n: [0 for _ in range(n)]
+inithwv = lambda h, w, v: [[v for _ in range(w)] for _ in range(h)]
+inithw = lambda h: [ list(input())for _ in range(h)]
+# initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
+initDp = lambda n:[[] for _ in range(n)]
+
+YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+YESNO=lambda b: bool([print('YES')] if b else print('NO'))
+int1=lambda x:int(x)-1
+from operator import itemgetter
+from itertools import combinations, permutations, combinations_with_replacement
+from collections import deque
 class UnionFind:
     # 参考 https://note.nkmk.me/python-union-find/
     def __init__(self, n):
-        self.n = n
         self.parents = [-1] * n   # 負は親（数値は木の大きさ）、非負は子（数値は親インデックス）
 
     def root(self, x):       # 木の根を求める
@@ -36,14 +56,14 @@ class UnionFind:
     
     # 要素xが属するグループに属する要素をリストで返す
     def members(self, x):
-        r = self.root(x)
-        return [i for i in range(self.n) if self.root(i) == r]
+        root = self.find(x)
+        return [i for i in range(self.n) if self.find(i) == root]
     
     # {ルート要素: [そのグループに含まれる要素のリスト], ...}のdefaultdictを返す
     def all_group_members(self):
         group_members = defaultdict(list)
         for member in range(self.n):
-            group_members[self.root(member)].append(member)
+            group_members[self.find(member)].append(member)
         return group_members
 
     #ルート要素: [そのグループに含まれる要素のリスト]を文字列で返す
@@ -53,9 +73,38 @@ class UnionFind:
 
 
 
-uf = UnionFind(10)
+n, Q = mapInt()
 
-uf.union(2,3)
-uf.union(4,3)
+query = []
+for i in range(Q):
+  t, a, b = mapInt()
+  a -= 1
+  b -= 1
+  query.append((t, a, b))
+  
+# cnt = [ [0 for _ in range(n)] for _ in range(n)]
 
-print(uf.members(4))
+dic = {}
+for i in range(Q):
+  t, a, b = query[i]
+  if b > a:
+    a, b = b, a
+  if t == 1:
+    # cnt[a][b] += 1
+    # cnt[b][a] += 1
+    if (a, b) in dic:
+      dic[(a, b)] += 1
+    else:
+      dic[(a, b)] = 1
+  else:
+    
+    uf = UnionFind(n)
+    for key, value in dic.items():
+      if value % 2 == 1:
+        x,y = key
+        uf.union(x,y)
+    YesNo(uf.same(a,b))
+            
+    
+
+

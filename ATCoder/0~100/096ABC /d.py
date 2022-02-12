@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from cmath import cos
 import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
@@ -22,18 +23,34 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
+"""nの約数を列挙"""
+""" 計算量は O(√n)"""
+def eratosthenes(n):
+    count = [0] * n
+    primes = []
+    for i in range(2, n):
+        if count[i] != 0: continue
+        primes.append(i)
+        #　iを因数にもつ全ての値に+1する。
+        for j in range(i, n, i):
+            count[j] += 1
+        
+    return count, primes
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+n = int(input())
 
-c = a+b
+_, primes = eratosthenes(55555)
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+ok = []
+for i in range(len(primes)):
+    s = str(primes[i])
+    if s[-1] == "1":
+        ok.append(primes[i])
+
+
+# print(primes, len(primes))
+# print(ok)
+print(* ok[1:1+n])
+
+# 5637個
+

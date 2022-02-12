@@ -23,17 +23,38 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+n,m = mapInt()
 
-c = a+b
+x = []
+y = []
+z = []
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+for i in range(n):
+  a, b, c = mapInt()
+  x.append(a)
+  y.append(b)
+  z.append(c)
+  
+
+# def s(x, y, z):
+#   return abs(x) + abs(y) + abs(z)
+
+ans = -INF
+for a in range(-1, 2, 1):
+  for b in range(-1, 2, 1):
+    for c in range(-1, 2, 1):
+      if a == 0 or b == 0 or c == 0: continue
+      dp = [ [ -INF for _ in range(m+2) ] for _ in range(n+1)]
+      dp[0][0] = 0
+      for i in range(n):
+        for j in range(m+1):
+          d = a*x[i] + b*y[i] + c*z[i]
+          dp[i+1][j] = max(dp[i+1][j], dp[i][j])
+          dp[i+1][j+1] = max(dp[i][j+1], dp[i][j] + d)
+      # print(dp)
+      ans = max(ans, dp[n][m])
+    
+    
+    
+print(ans)
+

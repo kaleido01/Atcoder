@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from operator import mod
 import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
@@ -23,17 +24,35 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+n = int(input())
 
-c = a+b
+a= [0] * 9
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+p = listInt()
+u = 0
+v = 400
+for i in range(n):
+  x = p[i]
+  now = 0
+  while(now < 9):
+    if u+ now*400 <= x < v + now * 400:
+      a[now] += 1
+    elif now == 8 and 3600 <= x:
+      a[now] += 1
+    now +=1
+
+ansT = 0
+ansM = 0
+# print(a)
+for i in range(9):
+  if i == 8 and a[i] != 0:
+    ansT += a[i]
+    if ansM == 0:
+      ansM = 1
+    break
+  if a[i] != 0:
+    ansT +=1
+    ansM +=1
+    
+    
+print(ansM, ansT)

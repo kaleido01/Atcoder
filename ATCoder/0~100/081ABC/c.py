@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, getpass
 import math, random
-import functools, itertools, collections, heapq, bisect
+import functools, itertools, collections, heapq, bisect, statistics
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
@@ -14,26 +14,42 @@ mapInt = lambda: map(int, input().split())
 listInt = lambda: list(map(int, input().split()))
 
 init0 = lambda n: [0 for _ in range(n)]
+init1 = lambda n: [-1 for _ in range(n)]
+
 inithwv = lambda h, w, v: [[v for _ in range(w)] for _ in range(h)]
-inithw = lambda h: [ list(input()) for _ in range(h)]
+inithw = lambda h: [ list(map(int, input().split())) for _ in range(h)]
 # initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
 initDp = lambda n:[[] for _ in range(n)]
 bit = lambda n, k:((n >> k) & 1) # nのkビット目
-YesNo=lambda b: bool([print('Yes')] if b else print('No'))
-YESNO=lambda b: bool([print('YES')] if b else print('NO'))
+# YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+# YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+n, k = mapInt()
 
-c = a+b
+a = listInt()
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+dic = {}
+
+for i in range(n):
+  if a[i] in dic:
+    dic[a[i]] += 1
+  else:
+    dic[a[i]] = 1
+
+
+p = sorted(dic.items(), key=lambda x: x[1])
+now = len(p)
+if now - k <=0:
+  print(0)
+  exit()
+  
+# print(p)
+ans = 0
+for _, v in p:
+  ans+=v
+  now -=1
+  if now - k == 0:
+    break
+  
+print(ans)

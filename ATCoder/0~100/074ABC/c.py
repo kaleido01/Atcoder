@@ -23,17 +23,26 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
 
-c = a+b
+A, B, C, D, E, F = mapInt()
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+mass = 0
+sugar = 0
+p = 0
+
+for a in range(F//(A)+10):
+  for b in range(F//(B)+10):
+    # print(a, b)
+    if a==b==0: continue
+    if 100*a*A + 100*b*B > F: continue
+    now = F - 100*a*A - 100*b*B
+    for c in range(0, now+10, C):
+      for d in range(0, now+10, D):
+        if 100*a*A + 100*b*B + c+d > F: continue
+        if (a*A+b*B)*E < c+d: continue
+        temp = (c + d) / (100*a*A + 100*b*B + c + d)
+        if temp >= p:
+          p = temp
+          mass = 100*a*A + 100*b*B + c+d
+          sugar = c+d
+print(mass, sugar)

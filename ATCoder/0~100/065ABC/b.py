@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys, getpass
+import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
@@ -22,18 +22,22 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
+n = int(input())
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
-
-c = a+b
-
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+a = [0] * (n+1)
+for i in range(n):
+  p = int(input())
+  a[i+1] = p
+  
+  
+cnt = 0
+cur = 1
+while cnt < n:
+  cur = a[cur]
+  cnt +=1
+  if cur == 2:
+    print(cnt)
+    exit()
+    
+    
+print(-1)

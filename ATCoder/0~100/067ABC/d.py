@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from cmath import cos
 import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
@@ -23,17 +24,47 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+n = int(input())
 
-c = a+b
+g = [ [] for i in range(n)]
+for i in range(n-1):
+    a, b = mapInt()
+    a-=1
+    b-=1
+    g[a].append(b)
+    g[b].append(a)
+    
+    
+q = deque()
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
+fill = [-1] * n
+
+fill[0] = 1
+fill[n-1] = 0
+q.append((0,1))
+q.append((n-1,0))
+
+while q:
+    pos, me = q.popleft()
+    nodes = g[pos]
+    
+    for node in nodes:
+        if fill[node] != -1: continue
+        fill[node] = me
+        q.append((node, me))
+        
+        
+
+cntF = 0
+cntS = 0 
+
+for i in range(n):
+    if fill[i]:
+        cntF +=1
+    else:
+        cntS +=1
+if cntF > cntS:
+    print("Fennec")
 else:
-  print(4)
+    print("Snuke")
+    

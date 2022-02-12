@@ -23,17 +23,39 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+n = int(input())
 
-c = a+b
+s1 = input()
+s2 = input()
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+
+left = 0
+ans = 1
+# 1 == tate, 0 == yoko
+last = 1
+while(left<n):
+  #縦
+  if s1[left] == s2[left]:
+    if left == 0:
+      ans *= 3
+    else:
+      if last:
+        ans *=2
+      else:
+        ans *=1
+    last = 1
+    ans %= MOD
+    left +=1
+  #横
+  if left < n-1 and s1[left] == s1[left+1]:
+    if left == 0:
+      ans *= 6
+    else:
+      if last:
+        ans *=2
+      else:
+        ans *= 3
+    last = 0
+    ans %= MOD
+    left +=2
+print(ans)

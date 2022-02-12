@@ -14,26 +14,38 @@ mapInt = lambda: map(int, input().split())
 listInt = lambda: list(map(int, input().split()))
 
 init0 = lambda n: [0 for _ in range(n)]
+init1 = lambda n: [-1 for _ in range(n)]
+initAny = lambda n, a: [a for _ in range(n)]
+
+
 inithwv = lambda h, w, v: [[v for _ in range(w)] for _ in range(h)]
 inithw = lambda h: [ list(input()) for _ in range(h)]
 # initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
 initDp = lambda n:[[] for _ in range(n)]
 bit = lambda n, k:((n >> k) & 1) # nのkビット目
 YesNo=lambda b: bool([print('Yes')] if b else print('No'))
-YESNO=lambda b: bool([print('YES')] if b else print('NO'))
+# YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+# h, w = mapInt()
+n = int(input())
 
-c = a+b
+t = [int(input()) for _ in range(n)]
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+def gcd(x,y):
+  if y==0:     #[1]yが0の時はxを返す
+    return x 
+  else:#[2]y=0以外の時
+    return gcd(y,x%y)
+  
+ans = 1
+for i in range(n):
+  x = t[i]
+  
+  q = gcd(x,ans)
+  
+  ans *= x
+  ans //= q
+  # print(ans)
+
+print(ans)

@@ -23,17 +23,34 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+n,m = mapInt()
 
-c = a+b
+b = []
+for i in range(m):
+  b.append(listInt())
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
-else:
-  print(4)
+# 区間スケジューリングで終わりが一番早いところから  
+b.sort(key=lambda x: x[1])
+
+ans = 0
+
+left = 0
+
+
+def broke(left, right):
+  l, _ = b[left]
+  return l < right
+
+
+while (left < m):
+  l, r = b[left]
+  ans += 1
+  #その橋を壊すことによって壊れる箸が出て来なくなるまでleftを進める
+  while(left < m and broke(left, r)):
+    left += 1
+  
+  # left += 1
+  
+print(ans)
+
+    

@@ -3,6 +3,7 @@ import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
+
 sys.setrecursionlimit(10**9)
 INF=10**18
 MOD=10**9+7 # 998244353
@@ -23,17 +24,10 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
 
-c = a+b
+x , a, b = mapInt()
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
+if abs(x-a) > abs(x-b):
+  print("B")
 else:
-  print(4)
+  print("A")

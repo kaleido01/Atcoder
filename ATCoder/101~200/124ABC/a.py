@@ -27,13 +27,7 @@ int1=lambda x:int(x)-1
 # a, b = listInt()
 a, b = mapInt()
 
-c = a+b
-
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
+if a == b:
+  print(a+b)
 else:
-  print(4)
+  print(max(a, b)* 2 -1)

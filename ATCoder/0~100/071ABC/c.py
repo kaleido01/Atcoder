@@ -23,17 +23,43 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
 
-c = a+b
+x = int(input())
+a = listInt()
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
+cnt = {}
+
+for i in range(x):
+  if a[i] in cnt:
+    cnt[a[i]] +=1
+  else:
+    cnt[a[i]] =1
+  
+lis1 = []
+lis2 = []
+
+for k, v in cnt.items():
+  if v >= 4:
+    lis1.append(k)
+  elif v == 2 or v == 3:
+    lis2.append(k)
+    
+
+ans = -1
+lis1.sort(reverse=True)
+lis2.sort(reverse= True)
+# print(lis1, lis2)
+if len(lis1) > 0:
+  ans = lis1[0] ** 2
+if len(lis2) >= 1 and len(lis1) > 0:
+    ans = max(lis1[0] * lis2[0], ans)
+    
+if len(lis2) >= 2:
+    ans = max(lis2[0] * lis2[1], ans)
+    
+
+if ans == -1:
+  print(0)
 else:
-  print(4)
+  print(ans)
+

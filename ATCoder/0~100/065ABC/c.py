@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from operator import mod
 import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
@@ -22,18 +23,45 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
+class Combination:
+  mod = 10**9+7 #出力の制限
+  g1 = [1, 1] # 元テーブル
+  g2 = [1, 1] #逆元テーブル
+  inverse = [0, 1] #逆元テーブル計算用テーブル
+  
+  def __init__(self,n):
+    for i in range(2, n + 1 ):
+     self.g1.append( ( self.g1[-1] * i ) % self.mod )
+     self.inverse.append( ( -self.inverse[self.mod % i] * (self.mod//i) ) % self.mod )
+     self.g2.append( (self.g2[-1] * self.inverse[-1]) % self.mod )
 
-# n = int(input())
-# a, b = listInt()
-a, b = mapInt()
+  def cmb(self, n, r):
+    if ( r < 0 or r > n ):
+        return 0
+    r = min(r, n - r)
+    return self.g1[n] * self.g2[r] * self.g2[n-r] % self.mod
+  
+  def per(self, n, r):
+    if ( r < 0 or r > n ):
+        return 0
+    return self.g1[n] * self.g2[n-r] % self.mod
+n, m = mapInt()
 
-c = a+b
 
-if c >= 15 and b >=8:
-  print("1")
-elif c >= 10 and b >=3:
-  print(2)
-elif c >= 3:
-  print(3)
+
+
+if abs(n-m) >= 2:
+  print(0)
+  exit()
+com = Combination(n+2)
+
+
+if abs(n-m) == 1:
+  v = com.per(n,n) * com.per(m,m)
+  v %= MOD
+  print(v)
 else:
-  print(4)
+  v = 2 * com.per(n,n) * com.per(m,m)
+  v %= MOD
+  print(v)
+
