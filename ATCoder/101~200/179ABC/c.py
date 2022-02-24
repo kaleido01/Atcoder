@@ -25,12 +25,16 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-
 n = int(input())
+
 
 ans = 0
 
 for i in range(1, n+1):
-  ans += (n-1) // i
+  for j in range(1, n+1):
+    temp = i*j
+    if n-temp <= 0:
+      break
+    ans +=1
 
 print(ans)

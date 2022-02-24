@@ -1,0 +1,62 @@
+# -*- coding: utf-8 -*-
+import sys, getpass, string
+import math, random
+import functools, itertools, collections, heapq, bisect
+from collections import Counter, defaultdict, deque
+sys.setrecursionlimit(10**9)
+INF=10**18
+MOD=10**9+7 # 998244353
+# d4 = [(1,0),(0,1),(-1,0),(0,-1)]
+# d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
+# d6 = [(2,0),(1,1),(-1,1),(-2,0),(-1,-1),(1,-1)]  # hexagonal layout
+input=lambda: sys.stdin.readline().rstrip()
+mapInt = lambda: map(int, input().split())
+listInt = lambda: list(map(int, input().split()))
+
+init0 = lambda n: [0 for _ in range(n)]
+init1 = lambda n: [-1 for _ in range(n)]
+initAny = lambda n, a: [a for _ in range(n)]
+
+
+inithwv = lambda h, w, v: [[v for _ in range(w)] for _ in range(h)]
+inithw = lambda h: [ list(input()) for _ in range(h)]
+# initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
+initDp = lambda n:[[] for _ in range(n)]
+bit = lambda n, k:((n >> k) & 1) # nのkビット目
+YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+# YESNO=lambda b: bool([print('YES')] if b else print('NO'))
+int1=lambda x:int(x)-1
+
+# n = int(input())
+# s = input()
+# h, w = mapInt()
+n, m = mapInt()
+cost = []
+op = []
+for i in range(m):
+  a, b = mapInt()
+  c = listInt()
+  cost.append(a)
+  temp = 0
+  for i in range(b):
+    c[i] -= 1
+    temp |=  1 << c[i]
+  # print("temp", temp)
+  op.append(temp)
+  
+  
+  
+# print(op)
+dp = [[ INF for i in range(2**n)] for i in range(m+1)]
+for i in range(m+1):
+  dp[i][0] = 0
+for i in range(m):
+  for j in range(1 << n):
+    dp[i+1][j] = min(dp[i+1][j] ,dp[i][j])
+    dp[i+1][j | op[i]] = min(dp[i+1][j | op[i]], dp[i][j | op[i]], dp[i][j] + cost[i])
+
+# print(dp)
+if dp[m][(1 << n) - 1] == INF:
+  print(-1)
+else:
+  print(dp[m][(1 << n) - 1])

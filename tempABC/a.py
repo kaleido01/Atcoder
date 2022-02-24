@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys, getpass
+import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
@@ -27,9 +27,9 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
+n = int(input())
 # s = input()
 # h, w = mapInt()
-n, k = mapInt()
+a = n//2
 
-a = listInt()
+print(a/n)
