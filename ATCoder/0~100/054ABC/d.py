@@ -4,7 +4,7 @@ import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
-INF=10**18
+INF=500
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
@@ -28,31 +28,37 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, k = mapInt()
+n, ma, mb = mapInt()
 
-p = listInt()
-
-s = []
-
-e = [0] *(1001)
-
-for i in range(1, 1001):
-  x = (i+1)/2
-  e[i] = x
-  
-r = []
-for v in p:
-  r.append(e[v])
-  
-s = [0] * (n+1)
+med = []
 for i in range(n):
-  s[i+1] = s[i] + r[i]
-  
+  med.append(listInt())
 
-ans = 0
+maxMass = 10 * n + 10
 
-for i in range(n-k+1):
-  # print(s[i+k] - s[i])
-  ans = max(ans, s[i+k] - s[i])
-print(ans)
-# print(r)
+
+dp = [ [ [ INF for _ in range(maxMass)] for _ in range(maxMass)] for _ in range(n+1)]
+
+dp[0][0][0] = 0
+
+for i in range(n):
+  for a in range(maxMass):
+    for b in range(maxMass):
+      ax, bx, cost = med[i]
+      print(a-ax, b-bx, i)
+      dp[i+1][a][b] = dp[i][a][b]
+      if a-ax >= 0 and b-bx>=0 and dp[i][a-ax][b-bx] != INF:
+        dp[i+1][a][b] = min(dp[i][a-ax][b-bx] + cost, dp[i+1][a][b])
+        
+ans = INF
+cnt = 1
+while(ma <= maxMass and mb <= maxMass):
+    ans = min(ans, dp[n][ma*cnt][mb*cnt])
+    cnt +=1
+    
+    
+# print(dp)
+if ans == INF:
+  print(-1)
+else:
+  print(ans)

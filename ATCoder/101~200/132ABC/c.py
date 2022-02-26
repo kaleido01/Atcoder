@@ -4,7 +4,7 @@ import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
-INF=10**19
+INF=10**18
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
@@ -28,38 +28,26 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, K = mapInt()
+n = int(input())
+d = listInt()
 
-points = []
-
-for i in range(n):
-  points.append(listInt())
-  
-ans = INF
+ma = 10 ** 5 + 1
+cnt = [0] * (ma)
 
 for i in range(n):
-  for j in range(i+1, n):
-    for k in range(n):
-      for l in range(k+1, n):
-        sx,sy = points[i]
-        tx,ty = points[j]
-        ux,uy = points[k]
-        vx,vy = points[l]
-        if sx > tx:
-          sx, tx = tx, sx
-        if uy > vy:
-          uy, vy = vy, uy
-        
-        sq = (tx-sx) * (vy-uy)
-        if sq <= 0 : continue
-        cnt = 0
-        for p in range(n):
-          mx, my = points[p]
-          
-          if sx <= mx <= tx and uy <= my <= vy:
-            cnt +=1
-        if cnt >= K:
-          ans = min(ans, sq)
+  cnt[d[i]] +=1
   
-      
+  
+s = [0] * (ma+1)
+
+for i in range(ma):
+  s[i+1] = s[i] + cnt[i]
+  
+ok = n // 2
+
+ans = 0
+for i in range(ma+1):
+  if s[i] == ok:
+    ans +=1
+    
 print(ans)

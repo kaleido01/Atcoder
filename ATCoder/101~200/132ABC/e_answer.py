@@ -3,8 +3,9 @@ import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
+from time import time
 sys.setrecursionlimit(10**9)
-INF=10**19
+INF=10**18
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
@@ -28,38 +29,46 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-n, K = mapInt()
+# n = int(input())
 
-points = []
+n, m = mapInt()
 
-for i in range(n):
-  points.append(listInt())
+g = [ [] for _ in range(n)]
+
+done = {}
+for i in range(m):
+  u, v = mapInt()
+  u -=1
+  v -=1
+  g[u].append(v)
+  # done[(u, v, 0)] = -1
+  # done[(u, v, 1)] = -1
+  # done[(u, v, 2)] = -1
   
-ans = INF
+S, T = mapInt()
+S -=1
+T -=1
 
-for i in range(n):
-  for j in range(i+1, n):
-    for k in range(n):
-      for l in range(k+1, n):
-        sx,sy = points[i]
-        tx,ty = points[j]
-        ux,uy = points[k]
-        vx,vy = points[l]
-        if sx > tx:
-          sx, tx = tx, sx
-        if uy > vy:
-          uy, vy = vy, uy
-        
-        sq = (tx-sx) * (vy-uy)
-        if sq <= 0 : continue
-        cnt = 0
-        for p in range(n):
-          mx, my = points[p]
-          
-          if sx <= mx <= tx and uy <= my <= vy:
-            cnt +=1
-        if cnt >= K:
-          ans = min(ans, sq)
+
+q = deque()
+q.append((S,1))
+done[(S,0)] = 0
+while(q):
+  pos, v = q.popleft()
+  nodes = g[pos]
+  for node in nodes:
+    # print((node, v))
+    if (node,v) in done: continue
+    # print("next")
+    if v == 0:
+      done[(node,v)] = done[(pos, 2)] + 1
+    else:
+      done[(node,v)] = done[(pos, v-1)] + 1
+    q.append((node, (v+1)%3))
+
+# print(done)
+if (T,0) in done:
+  print(done[(T, 0)] // 3)
+else:
+  print(-1)
   
-      
-print(ans)

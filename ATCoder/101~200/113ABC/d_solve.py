@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-import sys, getpass
+from ast import Mod
+from operator import mod, truediv
+import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
-INF=10**19
+INF=10**18
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
@@ -23,43 +25,41 @@ inithw = lambda h: [ list(input()) for _ in range(h)]
 # initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
 initDp = lambda n:[[] for _ in range(n)]
 bit = lambda n, k:((n >> k) & 1) # nのkビット目
-# YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# h, w = mapInt()
-n, K = mapInt()
 
-points = []
+h, w, K = mapInt()
 
-for i in range(n):
-  points.append(listInt())
-  
-ans = INF
+if w==1:
+    print(1)
+    exit()
 
-for i in range(n):
-  for j in range(i+1, n):
-    for k in range(n):
-      for l in range(k+1, n):
-        sx,sy = points[i]
-        tx,ty = points[j]
-        ux,uy = points[k]
-        vx,vy = points[l]
-        if sx > tx:
-          sx, tx = tx, sx
-        if uy > vy:
-          uy, vy = vy, uy
-        
-        sq = (tx-sx) * (vy-uy)
-        if sq <= 0 : continue
-        cnt = 0
-        for p in range(n):
-          mx, my = points[p]
-          
-          if sx <= mx <= tx and uy <= my <= vy:
-            cnt +=1
-        if cnt >= K:
-          ans = min(ans, sq)
-  
-      
-print(ans)
+dp = [ [ 0 for i in range(w)] for i in range(h+1)]
+dp[0][0] = 1
+
+
+def check(mask):
+    for i in range(w-2):
+        a = (mask >> i) & 1
+        b = (mask >> (i+1)) & 1
+        if a & b: return False
+    return True
+
+for i in range(h):
+    for j in range(w):
+        for mask in range(2 ** (w-1)):
+            if not check(mask): continue
+            if (mask & (1 << j)):
+                dp[i+1][j+1] += dp[i][j]
+                dp[i+1][j+1] %= MOD
+            elif 0 < j and (mask & (1 << (j-1))):
+                dp[i+1][j-1] += dp[i][j]
+                dp[i+1][j-1] %= MOD
+            else:
+                dp[i+1][j] += dp[i][j]
+                dp[i+1][j] %= MOD
+
+# print(dp)
+print(dp[h][K-1])

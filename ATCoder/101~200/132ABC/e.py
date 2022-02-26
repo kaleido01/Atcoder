@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from curses.ascii import islower
-from re import L
 import sys, getpass
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
+from time import time
 sys.setrecursionlimit(10**9)
 INF=10**18
 MOD=10**9+7 # 998244353
@@ -30,36 +29,69 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 int1=lambda x:int(x)-1
 
 # h, w = mapInt()
-s = input()
-n = len(s)
-mk = int(input())
+# n = int(input())
+
+n, m = mapInt()
+
+g = [ [] for _ in range(n)]
+changed = [ [] for _ in range(n)]
+
+done = {}
+for i in range(m):
+  u, v = mapInt()
+  u -=1
+  v -=1
+  g[u].append(v)
+  done[(u, v, 0)] = False
+  done[(u, v, 1)] = False
+  done[(u, v, 2)] = False
+  
+S, T = mapInt()
+S -=1
+T -=1
 
 
-# isLower 1: True(すでに下回っている) 0:exactまだ一致している
-dp = [ [ [0 for _ in range(5)] for _ in range(2)] for _ in range(n+1)] 
-dp[0][0][0] = 1
+def dfs(s, now, times):
+  if times == 3:
+    changed[s].append(now)
+    s = now
+    times = 0
+  nodes = g[now]
+  
+  for node in nodes:
+    if done[(now, node, times)]: continue
+    done[(now, node, times)] = True
+    
+    dfs(s, node, times+1)
+  
+# 非連結の可能性もある。
 
-for i in range(1, n+1):
-  for isLower in range(2):
-    for k in range(4):
-      if isLower:
-        dp[i][isLower][k] += dp[i-1][isLower][k] #0を使った場合kは増えない
-        dp[i][isLower][k+1] += (9) * dp[i-1][isLower][k] #1-9を使うとkが増える
-      else: #この桁まで一致している場合
-        cur = int(s[i-1])
-        for p in range(cur+1):
-          # 0配置はkは増えない
-          if p == 0:
-            if cur == 0:
-              dp[i][0][k] += dp[i-1][0][k]
-            else:
-              dp[i][1][k] += dp[i-1][0][k]
-            continue
-          # それ以外はk増加
-          if p == cur:
-            dp[i][0][k+1] += dp[i-1][0][k]
-          else:
-            dp[i][1][k+1] += dp[i-1][0][k]
-                
-                
-print(dp[n][0][mk] + dp[n][1][mk])
+dfs(S, S, 0)
+
+
+q = deque()
+dist = [-1] * n
+doneV = [False] * n
+q.append(S)
+done[S] = True
+dist[S] = 0
+
+while(q):
+  pos = q.popleft()
+  nodes = changed[pos]
+  for node in nodes:
+    if doneV[node]: continue
+    doneV[node] = True
+    
+    dist[node] = dist[pos] + 1
+    q.append(node)
+
+# print(changed)
+# print(dist)
+print(dist[T])
+  
+# for i in range(n):
+#   if done[i][0]: continue
+  
+#   done[i][0] = True
+#   dfs(i, i, 0)

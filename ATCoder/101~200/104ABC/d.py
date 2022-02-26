@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-import sys, getpass
+from ast import Mod
+from operator import mod
+import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
 INF=10**18
-# MOD=10**9+7 # 998244353
+MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
 # d6 = [(2,0),(1,1),(-1,1),(-2,0),(-1,-1),(1,-1)]  # hexagonal layout
@@ -23,11 +25,11 @@ inithw = lambda h: [ list(input()) for _ in range(h)]
 # initFalse = lambda h, w: [[False for _ in range(w)] for _ in range(h)]
 initDp = lambda n:[[] for _ in range(n)]
 bit = lambda n, k:((n >> k) & 1) # nのkビット目
-# YesNo=lambda b: bool([print('Yes')] if b else print('No'))
+YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
-MOD = 2019
 class ModInt:
+  MOD = 10**9 +7
   def __init__(self, x):
       self.x = x % MOD
 
@@ -92,27 +94,58 @@ class ModInt:
           ModInt(pow(other, self.x, MOD))
       )
       
-# h, w = mapInt()
-# n, k = mapInt()
-# n = int(input())
-t = list(input())
-t.reverse()
-n = len(t)
-s = [0] * (n+1)
+      
+      
+
+
+s = input()
+n = len(s)
+sl = [0] * (n+1)
+sr = [0] * (n+1)
+lq = [0] * (n+1)
+rq = [0] * (n+1)
 
 for i in range(n):
-  s[i+1] = (s[i] + int(t[i]) *  (ModInt(10) ** i))
-
-
-cnt = [0] * (2020)
-
-ans = 0
-# print(s)
-for i in range(n+1):
-  key = int(str(s[i]))
-  ans += cnt[key]
-  cnt[key] += 1
-
-
-print(ans)
+  sl[i+1] = sl[i]
+  sr[i+1] = sr[i]
+  lq[i+1] = lq[i]
+  rq[i+1] = rq[i]
   
+  if s[i] == "A":
+    sl[i+1] +=1
+
+  if s[i] == "?":
+    lq[i+1] += 1
+
+  if s[n-i-1] == "C":
+    sr[i+1] +=1
+  if s[n-i-1] == "?":
+    rq[i+1] +=1
+    
+    
+    
+  
+ans = ModInt(0)
+# print(sl,sr, lq, rq)
+for i in range(1, n-1):
+  if s[i] == "B" or s[i] == "?":
+    # print("aaa", lq[i], sl[i], rq[n-i-1], sr[n-i-1])
+    left = 0
+    right = 0
+    if lq[i] >=1:
+      # left = ModInt(3 ** lq[i] * sl[i] + 3 ** (lq[i]-1)* lq[i])
+      left = ModInt(3*sl[i]+lq[i])* (ModInt(3) ** (lq[i]-1))
+    else:
+      left = ModInt(sl[i])
+    if rq[n-i-1] >=1:
+      # right = ModInt(3 ** rq[n-i-1] * sr[n-i-1] + 3 ** (rq[n-i-1]-1) * rq[n-i-1])
+      right = ModInt(3*sr[n-i-1]+rq[n-i-1]) * (ModInt(3) ** (rq[n-i-1]-1))
+    else:
+      right = ModInt(sr[n-i-1])
+      
+      
+    # print(left, right)
+    ans += left * right
+    
+  
+print(ans)

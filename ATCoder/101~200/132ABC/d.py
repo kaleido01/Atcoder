@@ -4,7 +4,7 @@ import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
 sys.setrecursionlimit(10**9)
-INF=10**19
+INF=10**18
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
@@ -26,40 +26,35 @@ bit = lambda n, k:((n >> k) & 1) # nのkビット目
 # YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
+class Combination:
+  mod = 10**9+7 #出力の制限
+  g1 = [1, 1] # 元テーブル
+  g2 = [1, 1] #逆元テーブル
+  inverse = [0, 1] #逆元テーブル計算用テーブル
+  
+  def __init__(self,n):
+    for i in range(2, n + 1 ):
+     self.g1.append( ( self.g1[-1] * i ) % self.mod )
+     self.inverse.append( ( -self.inverse[self.mod % i] * (self.mod//i) ) % self.mod )
+     self.g2.append( (self.g2[-1] * self.inverse[-1]) % self.mod )
 
-# h, w = mapInt()
+  def cmb(self, n, r):
+    if ( r < 0 or r > n ):
+        return 0
+    r = min(r, n - r)
+    return self.g1[n] * self.g2[r] * self.g2[n-r] % self.mod
+  
+  def per(self, n, r):
+    if ( r < 0 or r > n ):
+        return 0
+    return self.g1[n] * self.g2[n-r] % self.mod
+
 n, K = mapInt()
 
-points = []
+c = Combination(5000)
 
-for i in range(n):
-  points.append(listInt())
-  
-ans = INF
+for i in range(1, K+1):
+    x = c.cmb(n-K+1, i) * c.cmb(K-1, i-1)
+    print(x % MOD)
 
-for i in range(n):
-  for j in range(i+1, n):
-    for k in range(n):
-      for l in range(k+1, n):
-        sx,sy = points[i]
-        tx,ty = points[j]
-        ux,uy = points[k]
-        vx,vy = points[l]
-        if sx > tx:
-          sx, tx = tx, sx
-        if uy > vy:
-          uy, vy = vy, uy
-        
-        sq = (tx-sx) * (vy-uy)
-        if sq <= 0 : continue
-        cnt = 0
-        for p in range(n):
-          mx, my = points[p]
-          
-          if sx <= mx <= tx and uy <= my <= vy:
-            cnt +=1
-        if cnt >= K:
-          ans = min(ans, sq)
-  
-      
-print(ans)
+            
