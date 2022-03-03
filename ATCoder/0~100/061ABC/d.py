@@ -3,8 +3,8 @@ import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
-sys.setrecursionlimit(10**9)
-INF=10**18
+sys.setrecursionlimit(3*10**5+10)
+INF=1 << 50
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
@@ -30,14 +30,15 @@ int1=lambda x:int(x)-1
 # n = int(input())
 # s = input()
 # h, w = mapInt()
-V, E, p = mapInt()    # Vは頂点数、Eは辺数
+
+V, E = map(int,input().split())    # Vは頂点数、Eは辺数
 es = []    # 辺
 for _ in range(E):
     # 頂点fromから頂点toへのコストcostの辺
     f, t, c = map(int,input().split())
     f -=1
     t -=1
-    es.append([f, t, -c+p])
+    es.append([f, t, -c])
 
 def bellmanford(s):
     d = [INF] * V
@@ -71,8 +72,6 @@ def bellmanford(s):
 d = bellmanford(0)    # 頂点0を始点とする
 
 if d[V-1] == -INF:
-    print(-1)
-elif d[V-1] >=0:
-    print(0)
+  print("inf")
 else:
   print(-d[V-1])

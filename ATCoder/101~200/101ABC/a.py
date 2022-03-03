@@ -27,9 +27,15 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# s = input()
+s = input()
 # h, w = mapInt()
-n, k = mapInt()
+ans = 0
 
-a = listInt()
+for i in range(len(s)):
+  if s[i] == "+":
+    ans +=1
+  else:
+    ans -=1
+
+
+print(ans)

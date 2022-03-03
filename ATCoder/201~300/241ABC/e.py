@@ -3,7 +3,7 @@ import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
-sys.setrecursionlimit(3*10**5+10)
+sys.setrecursionlimit(10**9)
 INF=10**18
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
@@ -30,6 +30,43 @@ int1=lambda x:int(x)-1
 # n = int(input())
 # s = input()
 # h, w = mapInt()
-n, k = mapInt()
+n = int(input())
+g = [ [] for _ in range(n)]
+for i in range(n-1):
+  u, v = mapInt()
+  u -= 1
+  v -= 1
+  g[u].append(v)
+  g[v].append(u)
+  
+  
+ans = [ [] for _ in range(n)]
 
-a = listInt()
+
+# leaf = [1]
+leaf = 1
+def dfs(pre, pos):
+  global leaf
+  nodes = g[pos]
+  
+  # 自分しかいけないのでout
+  if pre != -1 and len(nodes) == 1:
+    ans[pos] = (leaf, leaf)
+    leaf +=1
+    return ans[pos]
+  
+  ml = INF
+  mr = -INF
+  for node in nodes:
+    if node == pre: continue
+    x, y = dfs(pos, node)
+    ml = min(ml, x)
+    mr = max(mr, y)
+  ans[pos] = (ml, mr)
+  return ans[pos]
+
+  
+
+dfs(-1, 0)
+for i in range(n):
+  print(*ans[i])

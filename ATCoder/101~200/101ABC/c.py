@@ -32,4 +32,54 @@ int1=lambda x:int(x)-1
 # h, w = mapInt()
 n, k = mapInt()
 
+
 a = listInt()
+index = 0
+while a[index] !=1: index+=1
+
+left = []
+if index != 0:
+  left = a[: index+1]
+
+# lk = min(k, len(left))
+# rk = min(k, len(right))
+
+ans = 0
+
+
+
+# print(left, right, lk,rk)
+# if len(left) == 0:
+#   pass
+# elif len(left) <= k:
+#   ans +=1
+#   index += k-len(left)+1
+# else:
+#   ans +=1
+#   if len(left)-k < 0:
+#     index += k-len(left)+1
+#   else:
+#     ans += (len(left)-k) // (k-1)
+#     index += (len(left)-k) % (k-1)+1
+
+# # print(index)
+# right = []
+# if index >= n:
+#   print(ans)
+#   exit()
+# else:
+#   right = a[index:]
+  
+# if len(right) == 0:
+#   pass
+# elif 1 <= len(right) <= k-1:
+#   ans +=1
+# else:
+#   ans +=1
+#   if len(right) - (k-1) <0:
+#     pass
+#   else:
+#     ans += len(right) // (k-1)
+# print(ans)
+
+print(math.ceil((n-1)/(k-1)))

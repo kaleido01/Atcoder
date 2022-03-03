@@ -3,7 +3,7 @@ import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
-sys.setrecursionlimit(3*10**5+10)
+sys.setrecursionlimit(10**9)
 INF=10**18
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
@@ -27,9 +27,13 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
 # s = input()
 # h, w = mapInt()
-n, k = mapInt()
-
 a = listInt()
+
+now = 0
+now = a[now]
+now = a[now]
+now = a[now]
+
+print(now)

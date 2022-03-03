@@ -28,8 +28,12 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 int1=lambda x:int(x)-1
 
 # n = int(input())
-# s = input()
+s = input()
 # h, w = mapInt()
-n, k = mapInt()
 
-a = listInt()
+x = 0
+
+for i in range(len(s)):
+  x += int(s[i])
+  
+YesNo(int(s) % x ==0)

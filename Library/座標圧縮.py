@@ -12,7 +12,7 @@ B = sorted(set(A))
 D = { v: i for i, v in enumerate(B) }
 
 # 答え
-x = map(lambda v: D[v], A)
+x = list(map(lambda v: D[v], A))
 print(x)
 print(list(x))
 

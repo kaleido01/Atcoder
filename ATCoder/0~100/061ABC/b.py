@@ -30,6 +30,19 @@ int1=lambda x:int(x)-1
 # n = int(input())
 # s = input()
 # h, w = mapInt()
-n, k = mapInt()
+n, m = mapInt()
 
-a = listInt()
+g = [ [] for i in range(n)]
+
+for i in range(m):
+  a, b = mapInt()
+  a-=1
+  b-=1
+  
+  g[a].append(b)
+  g[b].append(a)
+  
+  
+for i in range(n):
+  print(len(g[i]))
+  
