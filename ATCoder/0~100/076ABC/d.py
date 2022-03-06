@@ -3,7 +3,7 @@ import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
-sys.setrecursionlimit(10**9)
+sys.setrecursionlimit(3*10**5+10)
 INF=10**18
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
@@ -27,51 +27,49 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
-# s = input()
-n, k = mapInt()
-a = listInt()
+n = int(input())
 
-cnt = {}
-ar = []
+
+t = listInt()
+s = [0] * (n+1)
+
+for i in range(n):
+  s[i+1] = s[i] + t[i]
+end = s[n]
+v = listInt()
+
+
+maxV = 50
+dp = [ [ -1 for i in range(maxV+1)] for _ in range(end+1)]
+
+dp[0][0] = 0
+
 now = 0
-while(now % n not in cnt):
-  # now %= n
-  cnt[now % n] = True
-  ar.append(now % n)
-  now += a[now % n]
+# print(s)
+def currentMax(time):
+  index = bisect.bisect_left(s, time)
+  if time < 63:
+    print(s, time, index, v[index-1])
+  return v[index-1]
   
+# n個目
+for i in range(end):
+  for j in range(maxV):
+    if dp[i][j] == -1: continue
+    if j > currentMax(i+1):
+      dp[i][j] = -1
+      continue
+    if currentMax(i+1) >= j+1:
+      dp[i+1][j+1] = max(dp[i+1][j+1], dp[i][j] + j + 0.5)
+    else:
+      pass
+      # dp[i][j] = -1
+      # continue
+    if j-1 >= 0:
+      dp[i+1][j-1] = max(dp[i+1][j-1], dp[i][j] + j - 0.5)
+    dp[i+1][j] = max(dp[i+1][j], dp[i][j] + j)
 
-roopStart = now % n
-p = 0
-
-for i in range(len(ar)):
-  if roopStart == ar[i]:
-    p = i
-    break
-  
-
-s1 = [0] * (p+1)
-s2 = [0] * (len(ar) - p + 1)
-
-for i in range(p):
-  s1[i+1] = s1[i] + a[ar[i]]
-
-new = ar[p:]
-for i in range(len(ar) - p):
-  s2[i+1] = s2[i] + a[new[i]]
+# print(dp)
+print(dp[end][0])
 
 
-# print(roopStart, p, ar, new)
-# print(s1, s2, len(ar) -p)
-if k - p > 0:
-  times = (k-p) // (len(ar) - p)
-  k = (k-p) % (len(ar) - p)
-  
-  before = new[k-1]
-  ans = s1[p] + times*s2[len(ar) - p] + s2[k]
-  print(ans)
-else:
-  ans = s1[k]
-  print(ans)
-  

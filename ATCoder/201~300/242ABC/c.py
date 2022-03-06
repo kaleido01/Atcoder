@@ -3,9 +3,9 @@ import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
-sys.setrecursionlimit(10**9)
+sys.setrecursionlimit(3*10**5+10)
 INF=10**18
-MOD=10**9+7 # 998244353
+MOD=998244353 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
 # d6 = [(2,0),(1,1),(-1,1),(-2,0),(-1,-1),(1,-1)]  # hexagonal layout
@@ -27,51 +27,30 @@ YesNo=lambda b: bool([print('Yes')] if b else print('No'))
 # YESNO=lambda b: bool([print('YES')] if b else print('NO'))
 int1=lambda x:int(x)-1
 
-# n = int(input())
+n = int(input())
 # s = input()
-n, k = mapInt()
-a = listInt()
+# h, w = mapInt()
 
-cnt = {}
-ar = []
-now = 0
-while(now % n not in cnt):
-  # now %= n
-  cnt[now % n] = True
-  ar.append(now % n)
-  now += a[now % n]
-  
+dp = [ [ 0 for i in range(10)] for i in range(n+1)]
 
-roopStart = now % n
-p = 0
-
-for i in range(len(ar)):
-  if roopStart == ar[i]:
-    p = i
-    break
-  
-
-s1 = [0] * (p+1)
-s2 = [0] * (len(ar) - p + 1)
-
-for i in range(p):
-  s1[i+1] = s1[i] + a[ar[i]]
-
-new = ar[p:]
-for i in range(len(ar) - p):
-  s2[i+1] = s2[i] + a[new[i]]
+for i in range(1, 10):
+  dp[1][i] = 1
 
 
-# print(roopStart, p, ar, new)
-# print(s1, s2, len(ar) -p)
-if k - p > 0:
-  times = (k-p) // (len(ar) - p)
-  k = (k-p) % (len(ar) - p)
-  
-  before = new[k-1]
-  ans = s1[p] + times*s2[len(ar) - p] + s2[k]
-  print(ans)
-else:
-  ans = s1[k]
-  print(ans)
-  
+for i in range(1, n):
+  for j in range(1, 10):
+    if j == 1:
+      dp[i+1][j] += dp[i][j+1] + dp[i][j]
+    if 2 <= j <= 8:
+      dp[i+1][j] += dp[i][j+1] + dp[i][j-1] + dp[i][j]
+    if j == 9:
+      dp[i+1][j] += dp[i][j-1] + dp[i][j]
+    dp[i+1][j] %= MOD
+
+
+ans = 0
+for i in range(1, 10):
+  ans += dp[n][i]
+  ans %= MOD
+print(ans)
+      

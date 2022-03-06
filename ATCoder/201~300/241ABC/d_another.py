@@ -184,26 +184,6 @@ x = list(map(lambda v: D[v], t))
 
 ans = []
 
-def isOk(l,r, key):
-  """不等号を入れ替える場合は呼び出し側のOKとNGのmiddleも入れ替える"""
-  # return a[index] <= key
-  print("key", key, seg.prod(l, r), l, r)
-  return seg.prod(l, r) <= key
-
-
-def binary_search(v, l, r):
-    ok = r
-    ng = l
-    # ng = -1
-    # ok = len(a)
-    while(abs(ok-ng) > 1):
-      middle = (ok + ng) // 2
-      if isOk(ng, middle, v):
-        ok = middle
-      else:
-        ng = middle
-    return ok
-
 print(t, list(x))
 cnt = 0
 seg = SegmentTree(add, 0, len(x))  # 区間和取得
@@ -212,20 +192,20 @@ for i in range(Q):
     seg.set(x[cnt], seg.get(x[cnt])+1)
     # print(seg)
   elif q[i][0] == 2:
-    index = binary_search(q[i][2],  x[cnt], -1)
+    index = bisect.bisect_right(seg, x[cnt])
     print(index)
-    if index == -1:
+    if index < q[i][2]:
       ans.append(-1)
     else:
-      ans.append(t[index])
+      ans.append(t[index - q[i][2]])
   else:
     # print(x)
-    index = binary_search(q[i][2], x[cnt], len(t))
+    index = bisect.bisect_left(seg, x[cnt])
     print(index)
-    if index == len(t):
+    if index + q[i][2]-1 >= len(t) :
       ans.append(-1)
     else:
-      ans.append(t[index])
+      ans.append(t[index + q[i][2]-1])
   cnt +=1
 
 

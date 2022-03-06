@@ -29,7 +29,15 @@ int1=lambda x:int(x)-1
 
 # n = int(input())
 # s = input()
-# h, w = mapInt()
-n, k = mapInt()
+h, w, n = mapInt()
+sx, sy = mapInt()
+tx, ty = mapInt()
+blocksC = {}
+blocksR = {}
+for i in range(n):
+  x, y = listInt()
+  blocksC = []
+  blocksR.append(x)
+  
 
-a = listInt()
+

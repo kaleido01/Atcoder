@@ -3,9 +3,9 @@ import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
-sys.setrecursionlimit(10**9)
+sys.setrecursionlimit(3*10**5+10)
 INF=10**18
-MOD=10**9+7 # 998244353
+MOD=998244353 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
 # d8 = [(1,0),(1,1),(0,1),(-1,1),(-1,0),(-1,-1),(0,-1),(1,-1)]
 # d6 = [(2,0),(1,1),(-1,1),(-2,0),(-1,-1),(1,-1)]  # hexagonal layout
@@ -29,49 +29,33 @@ int1=lambda x:int(x)-1
 
 # n = int(input())
 # s = input()
-n, k = mapInt()
-a = listInt()
+h, w, k = mapInt()
+sx, sy, ex, ey = mapInt()
 
-cnt = {}
-ar = []
-now = 0
-while(now % n not in cnt):
-  # now %= n
-  cnt[now % n] = True
-  ar.append(now % n)
-  now += a[now % n]
-  
+dp = [ [ [ 0 for i in range(2)] for i in range(2)] for i in range(k+1)] 
 
-roopStart = now % n
-p = 0
-
-for i in range(len(ar)):
-  if roopStart == ar[i]:
-    p = i
-    break
-  
-
-s1 = [0] * (p+1)
-s2 = [0] * (len(ar) - p + 1)
-
-for i in range(p):
-  s1[i+1] = s1[i] + a[ar[i]]
-
-new = ar[p:]
-for i in range(len(ar) - p):
-  s2[i+1] = s2[i] + a[new[i]]
-
-
-# print(roopStart, p, ar, new)
-# print(s1, s2, len(ar) -p)
-if k - p > 0:
-  times = (k-p) // (len(ar) - p)
-  k = (k-p) % (len(ar) - p)
-  
-  before = new[k-1]
-  ans = s1[p] + times*s2[len(ar) - p] + s2[k]
-  print(ans)
+if sx == ex and sy == ey:
+  dp[0][1][1] = 1
+elif sx == ex:
+  dp[0][1][0] = 1
+elif sy == ey:
+  dp[0][0][1] = 1
 else:
-  ans = s1[k]
-  print(ans)
-  
+  dp[0][0][0] = 1
+
+for i in range(k):
+  for istate in range(2):
+    for isyoko in range(2):
+      if istate == 1 and isyoko == 1:
+        dp[i+1][istate][isyoko] += dp[i][0][1] + dp[i][1][0]
+      if istate == 0 and isyoko == 0:
+        dp[i+1][istate][isyoko] += (w-1) * dp[i][0][1] + (h-1) * dp[i][1][0] + (h+w-4) *dp[i][0][0]
+      if istate == 1 and isyoko == 0:
+        dp[i+1][1][0] += dp[i][0][0] + (w-2) * dp[i][1][0] + (w-1) * dp[i][1][1]
+      if isyoko == 1 and istate == 0:
+        dp[i+1][0][1] += dp[i][0][0] + (h-2) * dp[i][0][1] + (h-1) * dp[i][1][1]
+      dp[i+1][istate][isyoko] %= MOD
+        
+# print(dp)
+print(dp[k][1][1])
+        

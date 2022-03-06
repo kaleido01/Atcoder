@@ -3,7 +3,7 @@ import sys, getpass, string
 import math, random
 import functools, itertools, collections, heapq, bisect
 from collections import Counter, defaultdict, deque
-sys.setrecursionlimit(10**9)
+sys.setrecursionlimit(3*10**5+10)
 INF=10**18
 MOD=10**9+7 # 998244353
 # d4 = [(1,0),(0,1),(-1,0),(0,-1)]
@@ -29,49 +29,48 @@ int1=lambda x:int(x)-1
 
 # n = int(input())
 # s = input()
-n, k = mapInt()
-a = listInt()
+n, m = mapInt()
 
-cnt = {}
-ar = []
-now = 0
-while(now % n not in cnt):
-  # now %= n
-  cnt[now % n] = True
-  ar.append(now % n)
-  now += a[now % n]
+
+ao = [ [] for i in range(n)]
+suzu = [ [] for i in range(n)]
+for i in range(m):
+  a, b = mapInt()
+  a -=1
+  b-= 1
+  ao[a].append(b)
+  ao[b].append(a)
+for i in range(m):
+  a, b = mapInt()
+  a -=1
+  b-= 1
+  suzu[a].append(b)
+  suzu[b].append(a)
   
 
-roopStart = now % n
-p = 0
+l = [  i for i in range(n)]
+pattern = list(itertools.permutations(l, n))
 
-for i in range(len(ar)):
-  if roopStart == ar[i]:
-    p = i
-    break
-  
+for p in pattern:
+  temp = [ [] for i in range(n)]
+  for i in range(n):
+    nodes = suzu[i]
+    for node in nodes:
+      temp[p[i]].append(p[node])
 
-s1 = [0] * (p+1)
-s2 = [0] * (len(ar) - p + 1)
+  # tempがaoに一致するか
+  # print(ao, temp)
+  ok = True
+  for i in range(n):
+    k = sorted(temp[i])
+    l = sorted(ao[i])
+    # print("aaaa", k,l)
+    if k != l:
+      ok = False
+  if ok:
+    print("Yes")
+    exit()
 
-for i in range(p):
-  s1[i+1] = s1[i] + a[ar[i]]
-
-new = ar[p:]
-for i in range(len(ar) - p):
-  s2[i+1] = s2[i] + a[new[i]]
+print("No")
 
 
-# print(roopStart, p, ar, new)
-# print(s1, s2, len(ar) -p)
-if k - p > 0:
-  times = (k-p) // (len(ar) - p)
-  k = (k-p) % (len(ar) - p)
-  
-  before = new[k-1]
-  ans = s1[p] + times*s2[len(ar) - p] + s2[k]
-  print(ans)
-else:
-  ans = s1[k]
-  print(ans)
-  
